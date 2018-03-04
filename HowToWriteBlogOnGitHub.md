@@ -4,9 +4,13 @@
 
 **新建仓库(New repository)**，博客里面的文件将存放于此
 
+![1-1](img/1-1.png)
+
 完毕后，在仓库的**Setting**里面找到**GitHub Pages**，在**Source**一栏选择**master branch**，即使用master分支作为我们的博客。这样我们可以在其他分支对博客进行不完全的修改而不影响博客的正常访问
 
 点击master branch右侧的**Save**保存刚才的Source设置
+
+![1-2](img/1-2.png)
 
 如果不想自己写html/css等文件来控制网页风格，可以在Source设置下面的**Theme chooser**中选择一个主题，以后就可以直接使用[MarkDown](https://guides.github.com/features/mastering-markdown/)写博客
 
