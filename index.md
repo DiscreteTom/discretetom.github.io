@@ -1,4 +1,4 @@
-# Western Greens' Blog
+# DiscreteTom' Blog
 
 欢迎来我的博客:)
 
