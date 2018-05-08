@@ -1,10 +1,10 @@
-# DiscreteTom' Blog
+# DiscreteTom Blog
 
 欢迎来我的博客:)
 
 ## Contents
 
-- [DiscreteTom' Blog](#discretetom-blog)
+- [DiscreteTom Blog](#discretetom-blog)
 	- [Contents](#contents)
 	- [About QT](#about-qt)
 	- [About Windows](#about-windows)
