@@ -10,6 +10,7 @@
 	- [About Windows](#about-windows)
 	- [Others](#others)
 	- [Notes](#notes)
+	- [Donate](#donate)
 	- [Contact me](#contact-me)
 
 ## About QT
@@ -21,6 +22,7 @@
 
 ## About Windows
 
+- [屏蔽Windows任务栏 2018-5-25](10.md)
 - [Windows下使用快捷键启动应用程序 2018-4-7](7.md)
 - [如何快速在指定目录启动Windows控制台(part 2) 2018-3-13](4.md)
 - [如何快速在指定目录启动Windows控制台 2018-3-4](3.md)
@@ -31,8 +33,15 @@
 
 ## Notes
 
+- C++中把字面字符串"Hello"转换为LPCWSTR，可以直接在字符串前面加L，即L"Hello"
+- Qt中使用[QHotkey](https://github.com/xtuer/QHotkey)添加全局热键，不要使用qxtglobalshortcut，后者已停止更新，不支持Qt5.3.1以上版本
+- C4D渲染到*图片查看器*后需要手动保存。如果不想手动保存，应选择*添加到渲染队列*
 - C++容器vector.size()的返回值无符号 如果vector长度为0则vector.size()-1的值不是-1而是一个非常大的数
 - clock()函数精度只有15ms 高精度计时应使用chrono::steady_clock
+
+## Donate
+
+如果觉得本博客有用欢迎[打赏](donate.md)支持:)
 
 ## Contact me
 
