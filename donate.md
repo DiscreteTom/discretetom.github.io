@@ -8,6 +8,6 @@
 
 微信/wechat
 
-<img src="img/wechat.png" width = 210>
+<img src="img/wechat.png" width = "210px">
 
 [返回主页](index.md)
