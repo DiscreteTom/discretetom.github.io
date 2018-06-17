@@ -8,6 +8,7 @@
 	- [Contents](#contents)
 	- [About QT](#about-qt)
 	- [About Windows](#about-windows)
+	- [About Study](#about-study)
 	- [Others](#others)
 	- [Notes](#notes)
 	- [Donate](#donate)
@@ -27,6 +28,11 @@
 - [Windows下使用快捷键启动应用程序 2018-4-7](7.md)
 - [如何快速在指定目录启动Windows控制台(part 2) 2018-3-13](4.md)
 - [如何快速在指定目录启动Windows控制台 2018-3-4](3.md)
+
+## About Study
+
+- 大二第二学期知识点
+	- [算法设计与分析](Study\2ndYear2ndSemester\AlgorithmDesignAndAnalyze\Chapter1.md)
 
 ## Others
 
