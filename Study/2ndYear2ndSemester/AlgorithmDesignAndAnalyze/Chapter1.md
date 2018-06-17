@@ -1,12 +1,12 @@
 # 算法设计与分析 目录
 
-[第一章 概述](Chapter1.md)
-[第二章 递归分治](Chapter2.md)
-[第三章 动态规划](Chapter3.md)
-[第四章 贪心算法](Chapter4.md)
-[第五章 回溯法](Chapter5.md)
-[第六章 分支限界法](Chapter6.md)
-[总结](Summary.md)
+- [第一章 概述](Chapter1.md)
+- [第二章 递归分治](Chapter2.md)
+- [第三章 动态规划](Chapter3.md)
+- [第四章 贪心算法](Chapter4.md)
+- [第五章 回溯法](Chapter5.md)
+- [第六章 分支限界法](Chapter6.md)
+- [总结](Summary.md)
 
 # 第一章 概述
 
