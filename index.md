@@ -32,7 +32,7 @@
 ## About Study
 
 - 大二第二学期知识点
-	- [算法设计与分析](Study\2ndYear2ndSemester\AlgorithmDesignAndAnalyze\Chapter1.md)
+	- [算法设计与分析](Study/2ndYear2ndSemester/AlgorithmDesignAndAnalyze/Chapter1.md)
 
 ## Others
 
