@@ -98,8 +98,8 @@ Dijkstra算法
 
 时间复杂度O(eloge)，e为边的数量
 
-觉得有用？欢迎[打赏](donate.md)
+觉得有用？欢迎[打赏](../../../donate.md)
 
 :)
 
-[返回主页](index.md)
+[返回主页](../../../index.md)
