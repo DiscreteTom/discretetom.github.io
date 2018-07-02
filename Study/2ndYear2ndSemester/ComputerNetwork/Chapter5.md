@@ -149,9 +149,11 @@ Link State Routing
 
 ### 负载掉落/负载丢弃(load shedding)
 
-RED(Random Early Detection)
+RED(Random Early Detection)**随机早期检测**
 
 上面的方法都不能消除拥塞时，路由器**主动丢包**（队列中的包），发送方检测到丢包会减速（结合TCP协议，在传输层减速）
+
+随机**早期**检测的含义：在拥塞发生之前就（主动）丢包。ECN也可能丢包，但是是被动丢包
 
 丢弃策略：
 - 随机丢弃
