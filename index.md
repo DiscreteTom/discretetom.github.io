@@ -6,6 +6,7 @@
 
 - [DiscreteTom Blog](#discretetom-blog)
 	- [Contents](#contents)
+	- [About Android Studio](#about-android-studio)
 	- [About QT](#about-qt)
 	- [About Windows](#about-windows)
 	- [About Study](#about-study)
@@ -13,6 +14,10 @@
 	- [Notes](#notes)
 	- [Donate](#donate)
 	- [Contact me](#contact-me)
+
+## About Android Studio
+
+- [AS解决Gradle同步失败的相关问题 2018-7-8](12.md)
 
 ## About QT
 - [Qt-关闭QMessageBox之后程序自动关闭了? 2018-5-8](9.md)
@@ -43,6 +48,8 @@
 
 ## Notes
 
+- Windows中Hosts文件的位置：`C:\Windows\System32\drivers\etc`。更改Hosts文件需要**以管理员身份打开**
+- 安装SDK时如果JDK已经安装但是SDK显示找不到JDK，可能是JDK版本太新。尝试安装旧版本JDK，如**JDK8u171**
 - C++中把字面字符串"Hello"转换为LPCWSTR，可以直接在字符串前面加L，即L"Hello"
 - Qt中使用[QHotkey](https://github.com/xtuer/QHotkey)添加全局热键，不要使用qxtglobalshortcut，后者已停止更新，不支持Qt5.3.1以上版本
 - C4D渲染到*图片查看器*后需要手动保存。如果不想手动保存，应选择*添加到渲染队列*
