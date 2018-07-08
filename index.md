@@ -41,6 +41,7 @@
 	- [计算机组成原理](Study/2ndYear2ndSemester/ComputerOrganizationPrinciple/Chapter1.md)
 	- [算法设计与分析](Study/2ndYear2ndSemester/AlgorithmDesignAndAnalyze/Chapter1.md)
 	- [形式语言与自动机](Study/2ndYear2ndSemester/FormalLanguageAndAutomata/Chapter1.md)
+	- [VHDL基础](Study/2ndYear2ndSemester/VHDL/vhdl.md)
 
 ## Others
 
