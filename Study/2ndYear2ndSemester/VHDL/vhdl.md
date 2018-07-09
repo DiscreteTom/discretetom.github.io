@@ -3,7 +3,7 @@
 ## 基本知识
 
 - 代码不区分大小写
-- 两个减号即后面的字符为单行注释
+- 两个减号及后面的字符为单行注释
 - 电路功能分为顺序语句和并行语句两种
 
 ## 库Library
@@ -12,7 +12,7 @@
 
 代码格式：
 
-```
+```vhdl
 library 库名;
 use 库名中的逻辑体名;
 ```
@@ -35,7 +35,7 @@ use ieee.std_logic_1164.all;   --加载ieee中std_logic_1164包内的所有内�
 
 代码格式：
 
-```
+```vhdl
 entity 实体名 is
 	[类属参数说明]
 	[端口说明]
@@ -44,7 +44,7 @@ end entity 实体名;
 
 端口说明格式：
 
-```
+```vhdl
 port(
 	端口名a1, ..., 端口名an : 方向 类型;
 	...
@@ -54,7 +54,7 @@ port(
 
 代码实例：
 
-```
+```vhdl
 entity HALFADD is          --实体的名字为HALFADD半加器
 	port(
 		A, B       : in bit;   --端口A和B，输入端口，输入数据类型为bit
@@ -71,13 +71,13 @@ end entity HALFADD;
 
 ## 构造体Architecture
 
-描述了电路的内部行为与数据流动。基本代码规则：
+描述了电路的内部行为与数据流动
 
 ### 基本代码格式
 
 代码格式：
 
-```
+```vhdl
 architecture 构造体名 of 实体名 is
 	[说明语句]
 begin
@@ -91,7 +91,7 @@ end architecture 构造体名;
 
 代码实例（半加器）：
 
-```
+```vhdl
 architecture BEHAVE of HALFADD is  --构造体名为BEHAVE，属于HALFADD
 begin
 	SUM <= A xor B;                  --把"A异或B"赋值给SUM
@@ -109,7 +109,7 @@ end architecture BEHAVE;
 
 实例：假设有如下两个实体
 
-```
+```vhdl
 entity and_gate is
 	port(A, B : in bit; X : out bit);
 end entity and_gate;
@@ -123,7 +123,7 @@ end entity or_gate;
 
 此处举例为了简单起见写了一个与门一个或门。如果有实体要调用这两个门：
 
-```
+```vhdl
 entity and_or_gate is
 	port(
 		in1, in2, in3, in4 : in bit;
@@ -150,19 +150,16 @@ end architecture behave;
 
 可以看到
 - 如果要在architecture内部调用其他实体，需要**在begin之前声明实体名与接口**
-- 在调用时需要**给每个组件名称**，即本例中的g1/g2/g3。和变量与信号的声明类似，组件名称后面接冒号和组件的类名
+- 在调用时可以给每个组件名称，即本例中的g1/g2/g3。和变量与信号的声明类似，组件名称后面接冒号和组件的类名
 - 使用port map来给组件设置信号对应关系
 
 ### 行为描述
 
 #### with-select-when语句
 
-类似于C语言中的switch-case语句
-
-
 实例：
 
-```
+```vhdl
 with x select q <=
 	"01" when "00",
 	"10" when "01",
@@ -173,7 +170,7 @@ with x select q <=
 
 #### when-else语句
 
-```
+```vhdl
 y <= "00" when s = '0' else "11";
 ```
 
@@ -181,7 +178,7 @@ y <= "00" when s = '0' else "11";
 
 #### if-else语句
 
-```
+```vhdl
 if a = '1' then
 	c <= '0';
 else
@@ -195,7 +192,7 @@ end if;
 
 常量声明格式：
 
-```
+```vhdl
 constant 常量名 : 数据类型 [:= 初始值];
 ```
 
@@ -205,7 +202,7 @@ constant 常量名 : 数据类型 [:= 初始值];
 
 变量声明格式：
 
-```
+```vhdl
 variable 变量名 : 数据类型 [取值范围] [:= 初始值];
 ```
 
@@ -221,11 +218,11 @@ variable 变量名 : 数据类型 [取值范围] [:= 初始值];
 - 多位赋值，使用双引号
 	- `temp(7 downto 4) := "1010"`
 
-**有些变量类型需要声明范围**，比如integer类型就需要。而std_logic类型就不需要（因为取值范围有限）
+**有些变量类型需要声明范围**，比如integer类型就需要。而std_logic类型就不需要（std_logic取值范围比较小，而integer取值范围很大，手动声明范围可以减少元件的使用）
 
 带取值范围的变量声明举例：
 
-```
+```vhdl
 variable x, y : integer range 15 downto 0 := 1;
 ```
 
@@ -236,7 +233,7 @@ variable x, y : integer range 15 downto 0 := 1;
 
 信号声明格式：
 
-```
+```vhdl
 signal 信号名 : 数据类型 [:= 初始值];
 ```
 
@@ -249,7 +246,7 @@ signal 信号名 : 数据类型 [:= 初始值];
 | 作用范围 | 全局，可以在进程之间通信 | 进程内部 |
 | 行为 | 延迟赋值 | 立即赋值 |
 
-可以把信号理解为时序逻辑中的信息传递，变量理解为组合逻辑中的信息传递
+可以把信号理解为**时序逻辑**中的信息传递，变量理解为**组合逻辑**中的信息传递
 
 ## VHDL数据类型
 
@@ -265,7 +262,7 @@ signal 信号名 : 数据类型 [:= 初始值];
 	- 不等同与数字中的0或1，只是两种逻辑状态的取值
 - 位矢量bit_vector
 	- 使用双引号括起来的一组值，如"000"
-	- 使用时先声明矢量长度，如signal s : bit_vector(15 downto 0)
+	- 使用时先声明矢量长度，如`signal s : bit_vector(15 downto 0)`
 - 布尔值boolean
 	- 取值true或false
 	- 和bit不同，没有数值含义。不能进行算术运算，可以进行逻辑运算
@@ -275,7 +272,7 @@ signal 信号名 : 数据类型 [:= 初始值];
 - 字符串string
 	- 使用双引号括起来
 	- 常用于程序的提示和说明
-	- 需要说明长度，如variable s : string(0 to 3)
+	- 需要说明长度，如`variable s : string(0 to 3)`
 - 时间time
 - 错误等级
 - 自然数 & 正整数
@@ -324,7 +321,7 @@ signal 信号名 : 数据类型 [:= 初始值];
 
 并置运算符`&`，用来连接变量形成更长的变量，如：
 
-```
+```vhdl
 signal a, b : std_logic;
 signal c : std_logic_vector(1 downto 0);
 
@@ -339,13 +336,13 @@ c <= a & b;
 
 #### 简单信号赋值
 
-```
+```vhdl
 aim <= expression
 ```
 
 #### 条件信号赋值
 
-```
+```vhdl
 aim <= expression1 when value1 else
        expression2 when value2 else
        expression3;
@@ -353,7 +350,7 @@ aim <= expression1 when value1 else
 
 #### 选择信号赋值
 
-```
+```vhdl
 with sel_expression select aim <=
 	expression1 when value1,
 	expression2 when value2,
@@ -367,7 +364,7 @@ with sel_expression select aim <=
 
 进程描述格式：
 
-```
+```vhdl
 [进程标签 :] process (敏感信号参数表)
 	[进程说明]
 begin
@@ -387,7 +384,7 @@ end process
 
 #### if-else语句
 
-```
+```vhdl
 if 条件 then
 	顺序语句
 elsif 条件 then
@@ -399,7 +396,7 @@ end if
 
 #### case语句
 
-```
+```vhdl
 case expression is
 	when value1 => 顺序语句;
 	when value2 => 顺序语句;
@@ -426,7 +423,7 @@ end case;
 
 思路：不同触发器之间使用信号连接（因为这些量可能会被用来发送到其他地方），clk上升沿来临时从右向左顺序处理信号，即b先赋值给q，d最后赋值给a。代码：
 
-```
+```vhdl
 entity ent1 is
 	port(d, clk : in bit; q : out bit);
 end ent1;
@@ -451,9 +448,9 @@ end behave;
 
 ![2](img/2.png)
 
-VHDL可以像C里面的枚举常量一样定义一系列**状态**。此题代码如下：
+VHDL可以像C里面的**枚举常量**一样定义一系列**状态**。此题代码如下：
 
-```
+```vhdl
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.std_logic_unsigned.all;
