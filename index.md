@@ -9,7 +9,7 @@
 	- [About Android Studio](#about-android-studio)
 	- [About QT](#about-qt)
 	- [About Windows](#about-windows)
-	- [About Study](#about-study)
+	- [Academic Materials](#academic-materials)
 	- [Others](#others)
 	- [Notes](#notes)
 	- [Donate](#donate)
@@ -34,7 +34,7 @@
 - [如何快速在指定目录启动Windows控制台(part 2) 2018-3-13](4.md)
 - [如何快速在指定目录启动Windows控制台 2018-3-4](3.md)
 
-## About Study
+## Academic Materials
 
 - 大二第二学期知识点
 	- [计算机网络](Study/2ndYear2ndSemester/ComputerNetwork/Chapter1.md)
@@ -49,6 +49,7 @@
 
 ## Notes
 
+- 如果Qt在debug的时候只显示变量窗口不显示局部变量，检查构建套件Kit和Debugger是否一致
 - Windows中Hosts文件的位置：`C:\Windows\System32\drivers\etc`。更改Hosts文件需要**以管理员身份打开**
 - 安装SDK时如果JDK已经安装但是SDK显示找不到JDK，可能是JDK版本太新。尝试安装旧版本JDK，如**JDK8u171**
 - C++中把字面字符串"Hello"转换为LPCWSTR，可以直接在字符串前面加L，即L"Hello"
