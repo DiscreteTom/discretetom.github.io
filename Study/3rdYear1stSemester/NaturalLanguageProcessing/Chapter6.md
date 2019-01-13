@@ -1,3 +1,14 @@
+# Natural Language Processing 自然语言处理 目录
+
+- [Chapter1 Introduction](Chapter1.md)
+- [Chapter2 N-gram语言模型](Chapter2.md)
+- [Chapter3 Neural Network based Language Model](Chapter3.md)
+- [Chapter4 Evaluation of language model](Chapter4.md)
+- [Chapter5 Part of Speech](Chapter5.md)
+- [Chapter6 Parsing](Chapter6.md)
+- [Chapter7 Text Classification](Chapter7.md)
+- [Chapter8 Text Clustering](Chapter8.md)
+
 # Chapter6 Parsing
 
 句法分析
@@ -176,3 +187,9 @@ Penn treebank: 由the University of Pennsylvania创建的树库
   - 此例中为40%
 - 词性标注准确率(tagging accuracy)
   - 此例中所有词的初始词性均标注正确，即100%
+
+觉得有用？欢迎[打赏](../../../donate.md)
+
+:)
+
+[返回主页](../../../index.md)

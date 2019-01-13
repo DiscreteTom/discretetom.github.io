@@ -1,3 +1,14 @@
+# Natural Language Processing 自然语言处理 目录
+
+- [Chapter1 Introduction](Chapter1.md)
+- [Chapter2 N-gram语言模型](Chapter2.md)
+- [Chapter3 Neural Network based Language Model](Chapter3.md)
+- [Chapter4 Evaluation of language model](Chapter4.md)
+- [Chapter5 Part of Speech](Chapter5.md)
+- [Chapter6 Parsing](Chapter6.md)
+- [Chapter7 Text Classification](Chapter7.md)
+- [Chapter8 Text Clustering](Chapter8.md)
+
 # Chapter3 Neural Network based Language Model
 
 神经网络语言模型
@@ -132,3 +143,9 @@ NNLM的优点：
 ![3-6](img/3-6.png)
 
 其中ω为神经网络参数
+
+觉得有用？欢迎[打赏](../../../donate.md)
+
+:)
+
+[返回主页](../../../index.md)
