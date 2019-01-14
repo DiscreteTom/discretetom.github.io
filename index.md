@@ -44,6 +44,7 @@
 	- [VHDL基础](Study/2ndYear2ndSemester/VHDL/vhdl.md)
 - 大三第一学期知识点
   - [自然语言处理NLP](Study/3rdYear1stSemester/NaturalLanguageProcessing/Chapter1.md)
+  - [编译原理](Study/3rdYear1stSemester/FundamentalsOfCompiling/1.md)
 
 ## Others
 
