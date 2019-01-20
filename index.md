@@ -46,6 +46,7 @@
   - [自然语言处理NLP](Study/3rdYear1stSemester/NaturalLanguageProcessing/Chapter1.md)
   - [编译原理](Study/3rdYear1stSemester/FundamentalsOfCompiling/1.md)
   - [操作系统](Study/3rdYear1stSemester/OperatingSystem/Chapter1.md)
+  - [通信原理](Study/3rdYear1stSemester/PrinciplesOfCommunications/1.md)
 
 ## Others
 
