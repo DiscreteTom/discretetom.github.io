@@ -47,6 +47,7 @@
   - [编译原理](Study/3rdYear1stSemester/FundamentalsOfCompiling/1.md)
   - [操作系统](Study/3rdYear1stSemester/OperatingSystem/Chapter1.md)
   - [通信原理](Study/3rdYear1stSemester/PrinciplesOfCommunications/1.md)
+  - [微机原理与接口技术](Study/3rdYear1stSemester/MicrocomputerPrincipleAndInterfaceTechnology/1.md)
 
 ## Others
 
