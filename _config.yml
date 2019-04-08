@@ -1,20 +1,20 @@
 # powered by qiubaiying.github.io
 
 # Site settings
-title: DiscreteTom Blog
-SEOTitle: DiscreteTom Blog
-# header-img: img/header.jpg
+title: DiscreteTom's Blog
+SEOTitle: DiscreteTom's Blog
+header-img: img/header.png
 email: discrete_tom@outlook.com
 # description: ""
-# keyword: "Blog, DiscreteTom"
+keyword: "Blog, DiscreteTom"
 url: "http://discretetom.github.io"
 # baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 github_repo: "https://github.com/DiscreteTom/DiscreteTom.git" # you code repository
 
 # Sidebar settings
-sidebar: false                           # whether or not using Sidebar.
-# sidebar-about-description: ""
-# sidebar-avatar: /img/portrait.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar: true                           # whether or not using Sidebar.
+sidebar-about-description: ""
+sidebar-avatar: /img/me.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
