@@ -3,7 +3,7 @@
 # Site settings
 title: DiscreteTom's Blog
 SEOTitle: DiscreteTom's Blog
-header-img: img/header.png
+# header-img: img/header.png
 email: discrete_tom@outlook.com
 # description: ""
 keyword: "Blog, DiscreteTom"
