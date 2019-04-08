@@ -1,3 +1,15 @@
+---
+layout:     post
+title:      '如何快速在指定目录启动Windows控制台 (Part 2)'
+# subtitle: 
+date:       2018-03-13
+author: DiscreteTom
+# header-img: img/
+catalog: true
+tags:
+  - windows
+---
+
 # 如何快速在指定目录启动Windows控制台 (Part 2)
 
 (这文章竟然还能有Part 2)
@@ -34,8 +46,3 @@
 
 [Part 1传送门](3.md)
 
-觉得有用？欢迎[打赏](donate.md)
-
-:)
-
-[返回主页](index.md)

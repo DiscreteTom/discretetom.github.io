@@ -10,7 +10,6 @@
 	- [About QT](#about-qt)
 	- [About Windows](#about-windows)
 	- [Academic Materials](#academic-materials)
-	- [Others](#others)
 	- [Notes](#notes)
 	- [Donate](#donate)
 	- [Contact me](#contact-me)
@@ -49,9 +48,6 @@
   - [通信原理](Study/3rdYear1stSemester/PrinciplesOfCommunications/1.md)
   - [微机原理与接口技术](Study/3rdYear1stSemester/MicrocomputerPrincipleAndInterfaceTechnology/1.md)
 
-## Others
-
-- [如何利用GitHub创建博客 2018-3-4](1.md)
 
 ## Notes
 
