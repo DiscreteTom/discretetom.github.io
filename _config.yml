@@ -1,1 +1,106 @@
-theme: jekyll-theme-slate
+# powered by qiubaiying.github.io
+
+# Site settings
+title: DiscreteTom Blog
+SEOTitle: DiscreteTom Blog
+# header-img: img/header.jpg
+email: discrete_tom@outlook.com
+# description: ""
+# keyword: "Blog, DiscreteTom"
+url: "http://discretetom.github.io"
+# baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
+github_repo: "https://github.com/DiscreteTom/DiscreteTom.git" # you code repository
+
+# Sidebar settings
+sidebar: false                           # whether or not using Sidebar.
+# sidebar-about-description: ""
+# sidebar-avatar: /img/portrait.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+
+
+
+# SNS settings
+RSS: false
+# weibo_username:     
+# zhihu_username:     
+github_username: DiscreteTom
+# facebook_username: 
+# jianshu_username:  
+# twitter_username:   qiubaiying
+
+
+
+
+# Build settings
+# from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
+permalink: pretty
+paginate: 10
+exclude: ["less","node_modules","Gruntfile.js","package.json","README.md"]
+anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
+
+
+
+# Gems
+# from PR#40, to support local preview for Jekyll 3.0
+gems: [jekyll-paginate]
+
+
+
+
+# Markdown settings
+# replace redcarpet to kramdown,
+# although redcarpet can auto highlight code, the lack of header-id make the catalog impossible, so I switch to kramdown
+# document: http://jekyllrb.com/docs/configuration/#kramdown
+markdown: kramdown
+highlighter: rouge
+kramdown:
+  input: GFM                            # use Github Flavored Markdown !important
+
+
+
+# 评论系统
+# Disqus（https://disqus.com/）
+disqus_username: DiscreteTom
+
+# Gitalk
+# gitalk:
+#   enable: #是否开启Gitalk评论
+#   clientID: 
+#   clientSecret: 
+#   repo: 
+#   owner: 
+#   admin: 
+#   distractionFreeMode: #是否启用类似FB的阴影遮罩
+
+
+# 统计
+
+# Analytics settings
+# Baidu Analytics
+# ba_track_id: 
+
+# Google Analytics
+ga_track_id: 'UA-137885294-1'            # Format: UA-xxxxxx-xx
+ga_domain: auto
+
+
+
+
+# Featured Tags
+featured-tags: true                     # 是否使用首页标签
+featured-condition-size: 1              # 相同标签数量大于这个数，才会出现在首页
+
+
+
+# Progressive Web Apps
+chrome-tab-theme-color: "#000000"
+service-worker: true
+
+
+
+# Friends
+# friends: [
+#     {
+#         title: "Apple Developer",
+#         href: "https://developer.apple.com/"
+#     }
+# ]
