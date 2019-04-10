@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      '如何快速在指定目录启动Windows控制台 (Part 2)'
+# title:      '如何快速在指定目录启动Windows控制台 (Part 2)'
 # subtitle: 
 date:       2018-03-13
 author: DiscreteTom
@@ -10,8 +10,6 @@ tags:
   - windows
 ---
 
-# 如何快速在指定目录启动Windows控制台 (Part 2)
-
 (这文章竟然还能有Part 2)
 
 优化这种事情应该是永不止步的:)
@@ -20,7 +18,9 @@ tags:
 
 根据菜鸡作者的Qt平台编辑经验，添加加速键只要在**Action**的**Name**里面添加
 
-	&[Key]
+```
+&[Key]
+```
 
 那么此Action的加速键就是Key
 
@@ -28,17 +28,21 @@ tags:
 
 所以把cmdPrompt的“默认”属性更改为
 
-	CMD Here(&`)
+```
+CMD Here(&`)
+```
 
 或者
 
-	CMD Here(&~)
+```
+CMD Here(&~)
+```
 
-![4-1](img/4-1.png)
+![4-1](/img/4-1.png)
 
 效果
 
-![4-2](img/4-2.png)
+![4-2](/img/4-2.png)
 
 以后只要使用右手在文件夹空白处右击，然后左手点击~键即可
 
