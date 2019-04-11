@@ -1,6 +1,6 @@
 {
   "name": "DiscreteTom's Blog",
-  "short_name": "DiscreteTom Blog",
+  "short_name": "DiscreteTom's Blog",
   "description": "A personal blog by engineer",
   "icons": [{
     "src": "icons/pwa_icon_128.png",
