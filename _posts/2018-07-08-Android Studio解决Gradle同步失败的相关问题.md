@@ -1,4 +1,10 @@
-# Android Studio解决Gradle同步失败的相关问题
+---
+layout: post
+author: DiscreteTom
+catalog: true
+tags:
+  - Android
+---
 
 已经被卡住好几天了。。。我只是想写个HelloWorld啊。。。
 
@@ -52,17 +58,17 @@ systemProp.http.proxyPort=8787
 
 使用站长工具的[超级ping](http://ping.chinaz.com/)，取消选择海外，ping一下`dl.google.com`
 
-![12-3](img/12-3.png)
+![12-3](/img/12-3.png)
 
 我得到了如下结果
 
-![12-4](img/12-4.png)
+![12-4](/img/12-4.png)
 
 北京谷翔信息技术有限公司的BGP结点。没毛病
 
 我选择了第一个IP地址，用本机的cmd来ping一下试试
 
-![12-5](img/12-5.png)
+![12-5](/img/12-5.png)
 
 能ping通，妙啊。接下来只要把这个IP地址写入Hosts文件就行了
 
@@ -78,20 +84,15 @@ systemProp.http.proxyPort=8787
 
 再次同步Gradle，可能还会出现如下错误（因为我的AS是刚装的，很多组件都没有下载）
 
-![12-1](img/12-1.png)
+![12-1](/img/12-1.png)
 
 因为我们已经可以访问`dl.google.com`了，直接点击错误中的蓝色链接进行下载安装即可。可能会多次出现类似的组件缺失的错误，都点击蓝色链接全部下载安装即可
 
 最后，Gradle终于同步成功
 
-![12-2](img/12-2.png)
+![12-2](/img/12-2.png)
 
 参考：
 - [Android Studio错误：Connect to 127.0.0.1:1080 [/127.0.0.1] failed: Connection refused: connect](https://blog.csdn.net/Rainminism/article/details/79713788)
 - [解决连不上dl.google.com和dl-ssl.google.com](https://blog.csdn.net/huweijian5/article/details/45867917)
 
-觉得有用？欢迎[打赏](donate.md)
-
-:)
-
-[返回主页](index.md)

@@ -1,4 +1,10 @@
-# Qt-关闭QMessageBox之后程序自动关闭了?
+---
+layout: post
+author: DiscreteTom
+catalog: true
+tags:
+  - QT
+---
 
 真是愚蠢的设计
 
@@ -11,7 +17,7 @@
 
 看下面这人畜无害的代码
 
-![9](img/9-1.png)
+![9](/img/9-1.png)
 
 以MainWindow为parent新建一个QMessageBox
 显示MessageBox并隐藏MainWindow
@@ -28,8 +34,3 @@
 
 但是我如果把程序缩小到托盘 弹一个MessageBox程序就没了。。。
 
-觉得有用？欢迎[打赏](donate.md)
-
-:)
-
-[返回主页](index.md)

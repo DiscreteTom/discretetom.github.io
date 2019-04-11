@@ -1,16 +1,20 @@
-# Qt-Windows应用开机自启动相关
-
-> 目录
-> - 实现开机自启动
-> - 自启动时找不到文件的原因与解决方案
-> - 判断应用是否为开机自启动
+---
+layout: post
+author: DiscreteTom
+catalog: true
+tags:
+  - windows
+  - QT
+---
 
 ## 实现开机自启动
 
 实现开机自启动需要修改注册表文件
 
-	HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
-	HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+```
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
+```
 
 第一个为所有用户登陆时启动的项目 第二个是当前用户登陆时启动的项目
 
@@ -94,8 +98,3 @@ if (argc > 1 && (argv[1] == MainWindow::tr("autoStart"))){//注意tr函数中没
 - [设置Qt程序在Windows开机后自动运行](https://www.cnblogs.com/FindSelf/p/3716741.html)
 - [vb判断程序是否是开机启动还是手动启动](https://zhidao.baidu.com/question/520965055.html)
 
-觉得有用？欢迎[打赏](donate.md)
-
-:)
-
-[返回主页](index.md)
