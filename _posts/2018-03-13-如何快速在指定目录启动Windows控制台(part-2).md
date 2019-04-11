@@ -1,6 +1,5 @@
 ---
-layout:     post
-date:       2018-03-13
+layout: post
 author: DiscreteTom
 catalog: true
 tags:
