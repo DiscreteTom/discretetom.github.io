@@ -1,10 +1,7 @@
 ---
 layout:     post
-# title:      '如何快速在指定目录启动Windows控制台 (Part 2)'
-# subtitle: 
 date:       2018-03-13
 author: DiscreteTom
-# header-img: img/
 catalog: true
 tags:
   - windows
