@@ -1,12 +1,11 @@
 ---
 layout: post
 author: DiscreteTom
+subtitle: '刚安装的Android Studio竟然不让我写Hello World'
 catalog: true
 tags:
   - Android
 ---
-
-已经被卡住好几天了。。。我只是想写个HelloWorld啊。。。
 
 ## 背景
 
