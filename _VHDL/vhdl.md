@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: collection
 author: DiscreteTom
 catalog: true
 title: VHDL硬件描述语言
