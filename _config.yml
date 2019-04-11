@@ -59,17 +59,17 @@ kramdown:
 
 # 评论系统
 # Disqus（https://disqus.com/）
-disqus_username: DiscreteTom
+# disqus_username: DiscreteTom
 
 # Gitalk
-# gitalk:
-#   enable: #是否开启Gitalk评论
-#   clientID: 
-#   clientSecret: 
-#   repo: 
-#   owner: 
-#   admin: 
-#   distractionFreeMode: #是否启用类似FB的阴影遮罩
+gitalk:
+  enable: true #是否开启Gitalk评论
+  clientID: 49812602cf60b16271f0 # from github application
+  clientSecret: 3819ce44d536cc44b135543e581eac2ec6f3910f # from github application
+  repo: discretetom.github.io
+  owner: DiscreteTom
+  admin: DiscreteTom
+  distractionFreeMode: true #是否启用类似FB的阴影遮罩
 
 
 # 统计
