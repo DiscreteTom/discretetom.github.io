@@ -42,6 +42,7 @@ anchorjs: true                          # if you want to customize anchor. check
 # Gems
 # from PR#40, to support local preview for Jekyll 3.0
 gems: [jekyll-paginate]
+# paginate: 5 # 5 posts per page
 
 
 
@@ -95,6 +96,38 @@ featured-condition-size: 0              # 相同标签数量大于这个数，�
 chrome-tab-theme-color: "#000000"
 service-worker: true
 
+
+collections:
+  AlgorithmDesignAndAnalyze:
+    permalink: /:collection/:title
+    output: true
+  ComputerNetwork:
+    permalink: /:collection/:title
+    output: true
+  ComputerOrganizationPrinciple:
+    permalink: /:collection/:title
+    output: true
+  FormalLanguageAndAutomata:
+    permalink: /:collection/:title
+    output: true
+  FundamentalsOfCompiling:
+    permalink: /:collection/:title
+    output: true
+  MicrocomputerPrincipleAndInterfaceTechnology:
+    permalink: /:collection/:title
+    output: true
+  NaturalLanguageProcessing:
+    permalink: /:collection/:title
+    output: true
+  OperatingSystem:
+    permalink: /:collection/:title
+    output: true
+  PrinciplesOfCommunications:
+    permalink: /:collection/:title
+    output: true
+  VHDL:
+    permalink: /:collection/:title
+    output: true
 
 
 # Friends
