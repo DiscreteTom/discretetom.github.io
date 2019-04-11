@@ -16,14 +16,10 @@
         <div id="huxblog_navbar">
             <div class="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="{{ site.baseurl }}/">Home</a>
-                    </li>
-                    {% for page in site.pages %}{% if page.title %}
-                    <li>
-                        <a href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
-                    </li>
-                    {% endif %}{% endfor %}
+                    <li><a href="{{ site.baseurl }}/">blogs</a></li>
+                    <li><a href="{{ site.baseurl }}/academic/">academic</a></li>
+                    <li><a href="{{ site.baseurl }}about//">about</a></li>
+                    <li><a href="{{ site.baseurl }}/tags/">tags</a></li>
                 </ul>
             </div>
         </div>
@@ -35,33 +31,33 @@
     // Drop Bootstarp low-performance Navbar
     // Use customize navbar with high-quality material design animation
     // in high-perf jank-free CSS3 implementation
-    var $body   = document.body;
+    var $body = document.body;
     var $toggle = document.querySelector('.navbar-toggle');
     var $navbar = document.querySelector('#huxblog_navbar');
     var $collapse = document.querySelector('.navbar-collapse');
 
     var __HuxNav__ = {
-        close: function(){
+        close: function () {
             $navbar.className = " ";
             // wait until animation end.
-            setTimeout(function(){
+            setTimeout(function () {
                 // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
+                if ($navbar.className.indexOf('in') < 0) {
                     $collapse.style.height = "0px"
                 }
-            },400)
+            }, 400)
         },
-        open: function(){
+        open: function () {
             $collapse.style.height = "auto"
             $navbar.className += " in";
         }
     }
 
     // Bind Event
-    $toggle.addEventListener('click', function(e){
+    $toggle.addEventListener('click', function (e) {
         if ($navbar.className.indexOf('in') > 0) {
             __HuxNav__.close()
-        }else{
+        } else {
             __HuxNav__.open()
         }
     })
@@ -77,9 +73,9 @@
      *
      * Also, we use 'click' instead of 'touchstart' as compromise
      */
-    document.addEventListener('click', function(e){
-        if(e.target == $toggle) return;
-        if(e.target.className == 'icon-bar') return;
+    document.addEventListener('click', function (e) {
+        if (e.target == $toggle) return;
+        if (e.target.className == 'icon-bar') return;
         __HuxNav__.close();
     })
 </script>
