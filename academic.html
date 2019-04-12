@@ -5,8 +5,8 @@ description: "这里存放了大学期间的笔记"
 ---
 
 {% for collection in site.collections %}
+{% if collection.label != 'posts' %}
 <div>
-	{% if collection.label != 'posts' %}
 	<p>{{ collection.label }}</p>
 	{% capture difference %}{{ collections.docs | size | minus: 1}}{% endcapture %}
 	{% if collection.docs %}
@@ -16,7 +16,7 @@ description: "这里存放了大学期间的笔记"
 		{% endfor %}
 	</ol>
 	{% endif %}
-	{% endif %}
 </div>
 <hr>
+{% endif %}
 {% endfor %}
