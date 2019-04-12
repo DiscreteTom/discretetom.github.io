@@ -7,11 +7,12 @@ description: "这里存放了大学期间的笔记"
 {% for collection in site.collections %}
 {% if collection.label != 'posts' %}
 <div class="collection fold">
-	<a style="cursor: pointer; text-decoration: none"><h2 class="collection-title">{% if collection.title %}{{ collection.title }}{% else %}{{collection.label }}{% endif %}</h2></a>
+	<a style="cursor: pointer; text-decoration: none"><h2 class="collection-title">{% if collection.title %}{{ collection.title }}{% else %}{{ collection.label }}{% endif %}</h2></a>
 	{% if collection.docs %}
 	<ol>
-		{% for doc in collection.docs %}
-		<a href="{{ doc.url | prepend: site.baseurl }}"><li>{{ doc.title }}</li></a>
+		{% assign docs=collection.docs | sort: 'index' %}
+		{% for doc in docs %}
+		<li><a href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title }}</a></li>
 		{% endfor %}
 	</ol>
 	{% endif %}
