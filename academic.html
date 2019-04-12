@@ -6,13 +6,12 @@ description: "这里存放了大学期间的笔记"
 
 {% for collection in site.collections %}
 {% if collection.label != 'posts' %}
-<div>
-	<p>{{ collection.label }}</p>
-	{% capture difference %}{{ collections.docs | size | minus: 1}}{% endcapture %}
+<div class="post-preview collection fold">
+	<a style="cursor: pointer; text-decoration: none"><h2 class="collection-label">{{ collection.label }}</h2></a>
 	{% if collection.docs %}
 	<ol>
 		{% for doc in collection.docs %}
-		<li><a href="{{ doc.url | prepend: site.baseurl }}">{{ doc.title }}</a></li>
+		<a href="{{ doc.url | prepend: site.baseurl }}"><li>{{ doc.title }}</li></a>
 		{% endfor %}
 	</ol>
 	{% endif %}
@@ -20,3 +19,22 @@ description: "这里存放了大学期间的笔记"
 <hr>
 {% endif %}
 {% endfor %}
+<style>
+	.fold ol{
+		display: none;
+	}
+	.collection-label::before{
+		margin-right: 20px;
+		content: '−'
+	}
+	.fold .collection-label::before{
+		content: '+';
+	}
+</style>
+<script src="/js/jquery.min.js"></script>
+<script>
+	$labels = $('.collection-label')
+	$labels.click((e)=>{
+		$(e.target).parent().parent().toggleClass('fold')
+	})
+</script>
