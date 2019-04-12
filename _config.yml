@@ -99,43 +99,33 @@ service-worker: true
 
 collections:
   AlgorithmDesignAndAnalyze:
-    permalink: /:collection/:title
     output: true
     title: 算法设计与分析
   ComputerNetwork:
-    permalink: /:collection/:title
     output: true
     title: 计算机网络
   ComputerOrganizationPrinciple:
-    permalink: /:collection/:title
     output: true
     title: 计算机组成原理
   FormalLanguageAndAutomata:
-    permalink: /:collection/:title
     output: true
     title: 形式语言与自动机
   FundamentalsOfCompiling:
-    permalink: /:collection/:title
     output: true
     title: 编译原理
   MicrocomputerPrincipleAndInterfaceTechnology:
-    permalink: /:collection/:title
     output: true
     title: 微机原理与接口技术
   NaturalLanguageProcessing:
-    permalink: /:collection/:title
     output: true
     title: 自然语言处理
   OperatingSystem:
-    permalink: /:collection/:title
     output: true
     title: 操作系统
   PrinciplesOfCommunications:
-    permalink: /:collection/:title
     output: true
     title: 通信原理
   VHDL:
-    permalink: /:collection/:title
     output: true
     title: VHDL硬件编程
 
