@@ -4,7 +4,8 @@ title: 'Academic Materials'
 description: "这里存放了大学期间的笔记"
 ---
 
-{% for collection in site.collections %}
+{% assign collections=site.collections | sort: 'index' %}
+{% for collection in collections %}
 {% if collection.label != 'posts' %}
 <div class="collection fold">
 	<a style="cursor: pointer; text-decoration: none"><h2 class="collection-title">{% if collection.title %}{{ collection.title }}{% else %}{{ collection.label }}{% endif %}</h2></a>
