@@ -70,7 +70,7 @@ gitalk:
   repo: discretetom.github.io
   owner: DiscreteTom
   admin: DiscreteTom
-  # distractionFreeMode: true #是否启用类似FB的阴影遮罩
+  distractionFreeMode: false #是否启用类似FB的阴影遮罩
 
 
 # 统计
