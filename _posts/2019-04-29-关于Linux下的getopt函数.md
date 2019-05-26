@@ -4,7 +4,7 @@ author: DiscreteTom
 subtitle: '参数重排序、区分选项与实参、无效选项相关'
 catalog: true
 tags:
-  - Linux
+  - linux
 ---
 
 ## 写在前面

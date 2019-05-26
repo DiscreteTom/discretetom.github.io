@@ -5,7 +5,7 @@ catalog: true
 title: Qt-关闭QMessageBox之后程序自动关闭了。。。
 subtitle: 自闭了自闭了。。。
 tags:
-  - QT
+  - qt
 ---
 
 ## 先说结论

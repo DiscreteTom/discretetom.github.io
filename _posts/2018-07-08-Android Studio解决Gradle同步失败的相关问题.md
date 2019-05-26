@@ -4,7 +4,7 @@ author: DiscreteTom
 subtitle: '刚安装的Android Studio竟然不让我写Hello World'
 catalog: true
 tags:
-  - Android
+  - android
 ---
 
 ## 背景

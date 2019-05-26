@@ -4,7 +4,7 @@ author: DiscreteTom
 catalog: true
 tags:
   - windows
-  - QT
+  - qt
 ---
 
 ## 实现开机自启动
