@@ -128,6 +128,9 @@ collections:
   VHDL:
     output: true
     title: VHDL硬件编程
+  DatabaseConcept:
+    output: true
+    title: 数据库系统概念
 
 
 # Friends
