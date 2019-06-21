@@ -131,6 +131,9 @@ collections:
   DatabaseConcept:
     output: true
     title: 数据库系统概念
+  LinuxProgrammingEnvironment:
+    output: true
+    title: Linux编程环境
 
 
 # Friends
