@@ -134,6 +134,9 @@ collections:
   LinuxProgrammingEnvironment:
     output: true
     title: Linux编程环境
+  AIPrinciple:
+    output: true
+    title: 人工智能原理
 
 
 # Friends
