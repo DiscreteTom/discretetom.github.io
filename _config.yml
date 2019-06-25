@@ -137,6 +137,9 @@ collections:
   AIPrinciple:
     output: true
     title: 人工智能原理
+  ComputerGraphics:
+    output: true
+    title: 计算机图形学
 
 
 # Friends
