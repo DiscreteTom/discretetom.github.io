@@ -1,0 +1,25 @@
+/* By @DiscreteTom */
+.side-catalog.fixed {
+  height: 100%;
+  overflow: hidden;
+}
+.side-catalog.fixed .catalog-body {
+  height: 90%;
+  overflow: hidden;
+}
+.side-catalog.fixed .catalog-body:hover {
+  overflow-y: scroll;
+}
+.side-catalog.fixed .catalog-body::-webkit-scrollbar {
+  width: 5px;
+}
+.side-catalog.fixed .catalog-body::-webkit-scrollbar-track {
+  border-radius: 2px;
+}
+.side-catalog.fixed .catalog-body::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background-color: #ccc;
+}
+.side-catalog.fixed .catalog-body li a {
+  max-width: 170px;
+}

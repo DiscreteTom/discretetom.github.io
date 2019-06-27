@@ -1,0 +1,32 @@
+/* By @DiscreteTom */
+
+.side-catalog.fixed {
+  height: 100%;
+  overflow: hidden;
+
+  .catalog-body {
+    height: 90%;
+    overflow: hidden;
+
+    &:hover {
+      overflow-y: scroll;
+    }
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 2px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 2px;
+      background-color: #ccc;
+    }
+
+    li a{
+      max-width: 170px;
+    }
+  }
+}
