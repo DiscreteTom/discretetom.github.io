@@ -5,22 +5,30 @@ description: "在研究怎么让主界面变好看。放图片固然好看，但
 
 {% for post in paginator.posts %}
 <div class="post-preview">
+    <!-- {% if post.tags %}
+    {% for tag in post.tags %}
+    <a class="tag" href="{{ site.baseurl }}/tags/#{{ tag }}" title="{{ tag }}">{{ tag }}</a>
+    {% endfor %}
+    {% endif %} -->
     <a href="{{ post.url | prepend: site.baseurl }}">
         <h2 class="post-title">
             {{ post.title }}
         </h2>
+
+
         {% if post.subtitle %}
         <h3 class="post-subtitle">
             {{ post.subtitle }}
         </h3>
         {% endif %}
-        <div class="post-content-preview">
+        <!-- <div class="post-content-preview">
             {{ post.content | strip_html | truncate:200 }}
-        </div>
+        </div> -->
+        <p class="post-meta">
+            Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on
+            {{ post.date | date: "%B %-d, %Y" }}
+        </p>
     </a>
-    <p class="post-meta">
-        Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}
-    </p>
 </div>
 <hr>
 {% endfor %}
