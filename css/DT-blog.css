@@ -26,7 +26,6 @@
 .post-preview {
   border: solid 1px #fff;
   border-radius: 5px;
-  padding: 0 5%;
 }
 .post-preview:hover {
   border: solid 1px #ccc;
@@ -48,4 +47,9 @@
 }
 .post-preview .tag:hover {
   border-color: #0085a1;
+}
+.post-preview .post-preview-block {
+  display: inline-block;
+  padding: 0 5%;
+  width: 100%;
 }
