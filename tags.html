@@ -44,33 +44,16 @@ layout: default
 					<span class="tag-text">{{ tag[0] }}</span>
 				</span>
 				{% for post in tag[1] %}
-				<!-- <li class="listing-item">
-				  <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-				  <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-				  </li> -->
-				<div class="post-preview">
-					<a href="{{ post.url | prepend: site.baseurl }}" title="{{ post.content | strip_html | truncate: 200 }}"
-						class="post-preview-block">
-						<h2 class="post-title">
-							{{ post.title }}
-						</h2>
-						{% if post.subtitle %}
-						<h3 class="post-subtitle">
-							{{ post.subtitle }}
-						</h3>
-						{% endif %}
-						<p class="post-meta">
-							Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on
-							{{ post.date | date: "%B %-d, %Y" }}
-						</p>
-					</a>
-					<!-- <p class="post-meta">{{ post.date | date:"%Y-%m-%d" }}</p> -->
-				</div>
-				<hr>
+				<li class="listing-item">
+					<time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
+					<a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+				</li>
 				{% endfor %}
 			</div>
+			<hr>
 			{% endfor %}
-
 		</div>
+
 	</div>
+</div>
 </div>
