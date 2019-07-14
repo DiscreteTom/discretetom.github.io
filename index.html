@@ -10,7 +10,8 @@ description: "在研究怎么让主界面变好看。放图片固然好看，但
     <a class="tag" href="{{ site.baseurl }}/tags/#{{ tag }}" title="{{ tag }}">{{ tag }}</a>
     {% endfor %}
     {% endif %} -->
-    <a href="{{ post.url | prepend: site.baseurl }}" title="{{ post.content | strip_html | truncate: 200 }}" class="post-preview-block">
+    <a href="{{ post.url | prepend: site.baseurl }}" title="{{ post.content | strip_html | truncate: 200 }}"
+        class="post-preview-block">
         <h2 class="post-title">
             {{ post.title }}
         </h2>
