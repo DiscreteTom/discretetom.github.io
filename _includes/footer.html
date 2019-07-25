@@ -277,17 +277,20 @@
 		});
 	});
 
-	// strip empty lines in post-preview link.title
-	$(".post-preview-block").each((index, el)=>{
-		var title = el.getAttribute("title")
-		var result = ''
-		title = title.split('\n')
-		for (let i = 0; i < title.length; ++i){
-			if (title[i].length){
-				result += title[i] + '\n'
-			}
-		}
-		el.setAttribute("title", result)
-	})
 </script>
 {% endif %}
+
+<script>
+// strip empty lines in post-preview link.title
+$(".post-preview-block").each((index, el)=>{
+	var title = el.getAttribute("title")
+	var result = ''
+	title = title.split('\n')
+	for (let i = 0; i < title.length; ++i){
+		if (title[i].length){
+			result += title[i] + '\n'
+		}
+	}
+	el.setAttribute("title", result)
+})
+</script>
