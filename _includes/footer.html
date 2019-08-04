@@ -413,18 +413,15 @@
 
 	var p0 = new Point(); //鼠标
 	p0.dx = p0.dy = 0;
-	var degree = 2.5;
 	document.onmousemove = function (ev) {
 		p0.x = ev.clientX;
 		p0.y = ev.clientY;
 	}
 	document.onmousedown = function (ev) {
-		degree = 5.0;
 		p0.x = ev.clientX;
 		p0.y = ev.clientY;
 	}
 	document.onmouseup = function (ev) {
-		degree = 2.5;
 		p0.x = ev.clientX;
 		p0.y = ev.clientY;
 	}
