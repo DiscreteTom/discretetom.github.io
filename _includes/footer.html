@@ -385,8 +385,9 @@
 		var new_dis2 = dx * dx + dy * dy;
 		if (new_dis2 > LINE_LENGTH){
 			// this point was captured by mouse but it's trying to escape
-			this.dx = -this.dx;
-			this.dy = -this.dy;
+			let t = this.dx;
+			this.dx = -this.dy;
+			this.dy = t;
 		}
 	}
 
