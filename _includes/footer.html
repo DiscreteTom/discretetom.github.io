@@ -92,9 +92,9 @@
 					{% if site.email %}
 					<li>
 						<a href="mailto: {{ site.email }}">
-                            <span class=" fa-stack fa-lg">
-							<i class="fa fa-circle fa-stack-2x"></i>
-							<i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+							<span class=" fa-stack fa-lg">
+								<i class="fa fa-circle fa-stack-2x"></i>
+								<i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
 							</span>
 						</a>
 					</li>
@@ -286,11 +286,15 @@
 		var title = el.getAttribute("title")
 		var result = ''
 		title = title.split('\n')
+		var count = 0;
 		for (let i = 0; i < title.length; ++i) {
 			if (title[i].length) {
 				result += title[i] + '\n'
+				count++;
+				if (count >= 5) break; // show at most 5 lines
 			}
 		}
+		if (!result.endsWith('...')) result += '...'
 		el.setAttribute("title", result)
 	})
 </script>
@@ -383,7 +387,7 @@
 		dx = this.x - p0.x;
 		dy = this.y - p0.y;
 		var new_dis2 = dx * dx + dy * dy;
-		if (new_dis2 > LINE_LENGTH){
+		if (new_dis2 > LINE_LENGTH) {
 			// this point was captured by mouse but it's trying to escape
 			let t = this.dx;
 			this.dx = -this.dy;
