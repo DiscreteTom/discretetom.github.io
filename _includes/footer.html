@@ -91,7 +91,7 @@
 					{% endif %}
 					{% if site.email %}
 					<li>
-						<a href="mailto: {{ site.email }}"">
+						<a href="mailto: {{ site.email }}">
                             <span class=" fa-stack fa-lg">
 							<i class="fa fa-circle fa-stack-2x"></i>
 							<i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
@@ -281,16 +281,195 @@
 {% endif %}
 
 <script>
-// strip empty lines in post-preview link.title
-$(".post-preview-block").each((index, el)=>{
-	var title = el.getAttribute("title")
-	var result = ''
-	title = title.split('\n')
-	for (let i = 0; i < title.length; ++i){
-		if (title[i].length){
-			result += title[i] + '\n'
+	// strip empty lines in post-preview link.title
+	$(".post-preview-block").each((index, el) => {
+		var title = el.getAttribute("title")
+		var result = ''
+		title = title.split('\n')
+		for (let i = 0; i < title.length; ++i) {
+			if (title[i].length) {
+				result += title[i] + '\n'
+			}
+		}
+		el.setAttribute("title", result)
+	})
+</script>
+
+<script>
+	//==========================================
+	// File:    background.js
+	// Title:   星空连线(鼠标跟随)
+	// Auther:  XieNaoban
+	// Version: v1.1
+	// Note:    直接扔在<body>里
+	//==========================================
+
+	// Last Modified By: DiscreteTom(discrete_tom@outlook.com) on 2019-08-04
+
+	// 可调参数
+	var BACKGROUND_COLOR = "rgba(255,255,255,1)";   // 背景色
+	// var BACKGROUND_COLOR = "rgba(0,43,54,1)";   // 背景色
+	var POINT_NUM = 99;                         // 屏幕上点的数目
+	var POINT_COLOR = "rgba(204,204,204,0.7)";  // 点的颜色
+	var LINE_COLOR = "204, 204, 204";           // RGB
+	var LINE_LENGTH = 10000;                    // 点之间连线长度(的平方)
+
+	// 创建背景画布
+	var cvs = document.createElement("canvas");
+	cvs.width = window.innerWidth;
+	cvs.height = window.innerHeight;
+	cvs.style.cssText = "\
+    position:fixed;\
+    top:0px;\
+    left:0px;\
+    z-index:-1;\
+    opacity:1.0;\
+    ";
+	document.body.appendChild(cvs);
+
+	var ctx = cvs.getContext("2d");
+
+	var startTime = new Date().getTime();
+
+	//随机数函数
+	function randomInt(min, max) {
+		return Math.floor((max - min + 1) * Math.random() + min);
+	}
+
+	function randomFloat(min, max) {
+		return (max - min) * Math.random() + min;
+	}
+
+	//构造点类
+	function Point() {
+		this.x = randomFloat(0, cvs.width);
+		this.y = randomFloat(0, cvs.height);
+
+		var speed = randomFloat(0.3, 1.4);
+		var angle = randomFloat(0, 2 * Math.PI);
+
+		this.dx = Math.sin(angle) * speed;
+		this.dy = Math.cos(angle) * speed;
+
+		this.r = 1.2;
+
+		this.color = POINT_COLOR;
+	}
+
+	Point.prototype.move = function () {
+		var dx = this.x - p0.x;
+		var dy = this.y - p0.y;
+		var old_dis2 = dx * dx + dy * dy;
+		this.x += this.dx;
+		if (this.x < 0) {
+			this.x = 0;
+			this.dx = -this.dx;
+		} else if (this.x > cvs.width) {
+			this.x = cvs.width;
+			this.dx = -this.dx;
+		}
+		this.y += this.dy;
+		if (this.y < 0) {
+			this.y = 0;
+			this.dy = -this.dy;
+		} else if (this.y > cvs.height) {
+			this.y = cvs.height;
+			this.dy = -this.dy;
+		}
+
+		// judge relation with mouse
+		if (old_dis2 > LINE_LENGTH) return; // this point is not captured by mouse
+		if (p0.x == null) return; // mouse is out of window
+		dx = this.x - p0.x;
+		dy = this.y - p0.y;
+		var new_dis2 = dx * dx + dy * dy;
+		if (new_dis2 > LINE_LENGTH){
+			// this point was captured by mouse but it's trying to escape
+			this.dx = -this.dx;
+			this.dy = -this.dy;
 		}
 	}
-	el.setAttribute("title", result)
-})
+
+	Point.prototype.draw = function () {
+		ctx.fillStyle = this.color;
+		ctx.beginPath();
+		ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+		ctx.closePath();
+		ctx.fill();
+	}
+
+	var points = [];
+
+	function initPoints(num) {
+		for (var i = 0; i < num; ++i) {
+			points.push(new Point());
+		}
+	}
+
+	var p0 = new Point(); //鼠标
+	p0.dx = p0.dy = 0;
+	var degree = 2.5;
+	document.onmousemove = function (ev) {
+		p0.x = ev.clientX;
+		p0.y = ev.clientY;
+	}
+	document.onmousedown = function (ev) {
+		degree = 5.0;
+		p0.x = ev.clientX;
+		p0.y = ev.clientY;
+	}
+	document.onmouseup = function (ev) {
+		degree = 2.5;
+		p0.x = ev.clientX;
+		p0.y = ev.clientY;
+	}
+	window.onmouseout = function () {
+		p0.x = null;
+		p0.y = null;
+	}
+
+	function drawLine(p1, p2, deg) {
+		var dx = p1.x - p2.x;
+		var dy = p1.y - p2.y;
+		var dis2 = dx * dx + dy * dy;
+		if (dis2 < 2 * LINE_LENGTH) {
+			if (p1 === p0) {
+				if (dis2 > LINE_LENGTH) {
+					p2.x += dx * 0.03;
+					p2.y += dy * 0.03;
+				} else return;
+			}
+			var t = (1.05 - dis2 / LINE_LENGTH) * 0.2 * deg;
+			ctx.strokeStyle = 'rgba(' + LINE_COLOR + ',' + t + ')';
+			ctx.beginPath();
+			ctx.lineWidth = 1.5;
+			ctx.moveTo(p1.x, p1.y);
+			ctx.lineTo(p2.x, p2.y);
+			ctx.closePath();
+			ctx.stroke();
+		}
+		return;
+	}
+
+	//绘制每一帧
+	function drawFrame() {
+		cvs.width = window.innerWidth;
+		cvs.height = window.innerHeight;
+		ctx.fillStyle = BACKGROUND_COLOR;
+		ctx.fillRect(0, 0, cvs.width, cvs.height);
+
+		var arr = (p0.x == null ? points : [p0].concat(points));
+		for (var i = 0; i < arr.length; ++i) {
+			for (var j = i + 1; j < arr.length; ++j) {
+				drawLine(arr[i], arr[j], 1.0);
+			}
+			arr[i].draw();
+			arr[i].move();
+		}
+
+		window.requestAnimationFrame(drawFrame);
+	}
+
+	initPoints(POINT_NUM);
+	drawFrame();
 </script>
