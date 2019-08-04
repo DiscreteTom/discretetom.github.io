@@ -24,7 +24,7 @@
   max-width: 170px;
 }
 .post-preview {
-  border: solid 1px #fff;
+  border: solid 1px transparent;
   border-radius: 5px;
 }
 .post-preview:hover {
