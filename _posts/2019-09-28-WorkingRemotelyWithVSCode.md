@@ -2,7 +2,7 @@
 layout: post
 author: DiscreteTom
 title: '使用VSCode远程工作'
-subtitle: ''
+subtitle: '告别文件传输的痛苦'
 catalog: true
 tags:
   - windows
@@ -11,7 +11,7 @@ tags:
 
 ## 效果
 
-以前如果想编辑服务器文件，通常都是本地编辑，然后：
+以前如果想编辑服务器文件，通常都是本地编辑（因为可以使用IDE），然后：
 - 本地git push，远端git pull
 - 使用ftp传输
 - 使用scp传输
@@ -33,7 +33,7 @@ tags:
 
 点击左下角的连接图标，选择`Remote-SSH: Open Configuration File...`，选择合适的配置文件进行编辑
 
-![](/img/1908928-2.png)
+![](/img/190928-2.png)
 
 配置文件中也给出了配置文件的格式的[文档连接](https://linux.die.net/man/5/ssh_config)
 
@@ -45,7 +45,7 @@ Host CustomServerName
 		User your-username
 ```
 
-如果使用密钥对登录，需要指定密钥文件，windows系统也可以像linux一样使用`/`作为路径分隔符：
+如果使用密钥对登录，需要指定密钥文件路径。windows系统也可以像linux一样使用`/`作为路径分隔符：
 
 ```
 Host Ali
