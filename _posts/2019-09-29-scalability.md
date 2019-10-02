@@ -2,6 +2,7 @@
 layout: post
 author: DiscreteTom
 title: 系统设计中的可扩展性(Scalability)
+subtitle: 水平扩展与垂直扩展、高可用、服务端缓存等
 catalog: true
 tags:
   - 系统设计
