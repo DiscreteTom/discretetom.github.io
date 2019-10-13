@@ -20,6 +20,15 @@ tags:
 
 >拓扑位置等效：如果根据设备调用关系把设备拓扑抽象为树，那么父节点相同且设备类型相同且功能与目的相同的设备视为拓扑位置等效。 -- 沃.兹基硕德（滑稽
 
+> 何为可扩展性 - 摘自[The System Design Primer](https://github.com/donnemartin/system-design-primer)
+> 
+>如果服务性能的增长与资源的增加是成比例的，服务就是可扩展的。通常，提高性能意味着服务于更多的工作单元，另一方面，当数据集增长时，同样也可以处理更大的工作单位。
+>
+>另一个角度来看待性能与可扩展性:
+>
+>- 如果你的系统有**性能问题**，对于单个用户来说是缓慢的。
+>- 如果你的系统有**可扩展性问题**，单个用户较快但在高负载下会变慢。
+
 ## 架构的水平扩展与垂直扩展
 
 - **垂直扩展(vertical scaling)** - 使用能力更强、性质相同的设备替换原设备
@@ -211,6 +220,7 @@ VPC内部则不再需要HTTPS，仅HTTP就可以
 
 ## 参考
 
+- [The System Design Primer](https://github.com/donnemartin/system-design-primer)
 - [CS75 (Summer 2012) Lecture 9 Scalability Harvard Web Development David Malan](https://www.youtube.com/watch?v=-W9F__D3oY4)
 - [理解水平扩展和垂直扩展](https://www.iteye.com/blog/yunjiechao-163-com-2124949)
 - [Master-master vs master-slave database architecture?](https://stackoverflow.com/questions/3736969/master-master-vs-master-slave-database-architecture)
