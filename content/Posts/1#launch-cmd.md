@@ -1,5 +1,5 @@
 ---
-title: -如何快速在指定目录启动Windows控制台
+title: 如何快速在指定目录启动Windows控制台
 date: 2018-03-04
 tags:
   - windows
