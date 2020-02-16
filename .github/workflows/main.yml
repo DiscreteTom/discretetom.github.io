@@ -14,20 +14,23 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: DiscreteTom/dt-blog-boilerplate
+        path: boilerplateRepo
       
     - name: checkout blog
       uses: actions/checkout@v2
       with:
         ref: source
+        path: contentRepo
         
     - name: npm install & generate
       run: |
-        cd dt-blog-boilerplate
+        cp contentRepo/* boilerplateRepo
+        cd boilerplateRepo/dt-blog-boilerplate
         npm install
         npm run generate
     
     - name: GitHub Pages Deploy
       uses: maxheld83/ghpages@v0.2.1
       env:
-        BUILD_DIR: dt-blog-boilerplate/dist
+        BUILD_DIR: boilerplateRepo/dt-blog-boilerplate/dist
       
