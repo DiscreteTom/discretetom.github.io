@@ -22,13 +22,13 @@ jobs:
         
     - name: npm install & generate
       run: |
+        cp discretetom.github.io/* dt-blog-boilerplate
+        cd dt-blog-boilerplate
         npm install
         npm run generate
     
-    - name: deploy
-      uses: JamesIves/github-pages-deploy-action@releases/v3
-      with:
-        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: master # The branch the action should deploy to.
-        FOLDER: dt-blog-boilerplate/dist # The folder the action should deploy.
+    - name: GitHub Pages Deploy
+      uses: maxheld83/ghpages@v0.2.1
+      env:
+        BUILD_DIR: dt-blog-boilerplate/dt-blog-boilerplate/dist
       
