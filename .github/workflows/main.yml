@@ -15,12 +15,14 @@ jobs:
       with:
         repository: DiscreteTom/dt-blog-boilerplate
         path: boilerplateRepo
+        persist-credentials: false
       
     - name: checkout blog
       uses: actions/checkout@v2
       with:
         ref: source
         path: contentRepo
+        persist-credentials: false
         
     - name: npm install & generate
       run: |
