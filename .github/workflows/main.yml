@@ -10,14 +10,6 @@ jobs:
     - name: setup node
       uses: actions/setup-node@master
     
-    - name: cache
-      uses: actions/cache@v1
-      with:
-        path: ~/.npm
-        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-        restore-keys: |
-          ${{ runner.os }}-node-
-    
     - name: checkout boilerplate
       uses: actions/checkout@v2
       with:
@@ -31,6 +23,14 @@ jobs:
         ref: source
         path: contentRepo
         persist-credentials: false
+       
+    - name: cache
+      uses: actions/cache@v1
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-node-
         
     - name: npm install & generate
       run: |
