@@ -15,12 +15,14 @@ jobs:
       with:
         repository: DiscreteTom/dt-blog-boilerplate
         path: boilerplateRepo
+        persist-credentials: false
       
     - name: checkout blog
       uses: actions/checkout@v2
       with:
         ref: source
         path: contentRepo
+        persist-credentials: false
         
     - name: npm install & generate
       run: |
@@ -28,9 +30,10 @@ jobs:
         cd boilerplateRepo/dt-blog-boilerplate
         npm install
         npm run generate
-    
-    - name: GitHub Pages Deploy
-      uses: maxheld83/ghpages@v0.2.1
-      env:
-        BUILD_DIR: boilerplateRepo/dt-blog-boilerplate/dist
-      
+
+    - name: deploy
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        personal_token: ${{ secrets.GH_PAT }}
+        publish_branch: master 
+        publish_dir: boilerplateRepo/dt-blog-boilerplate/dist 
