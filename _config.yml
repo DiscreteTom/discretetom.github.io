@@ -1,9 +1,0 @@
-title: DiscreteTom's Blog
-root: Posts # 选择`content`文件夹下的一个文件或目录作为`/`路径的页面
-defaultLanguage: en # 文件后缀没有指明语言时默认使用的语言
-repo: 'https://github.com/DiscreteTom/discretetom.github.io' # github repo address
-email: 'mailto:discrete_tom@outlook.com' # author email address
-author: 'DiscreteTom' # author github username
-folderIcon: mdi-folder-outline # mdi icon name
-fileIcon: mdi-file # mdi icon name
-orderDecider: '#' # 用来确定内容顺序
