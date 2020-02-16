@@ -1,0 +1,34 @@
+name: CI
+on:
+  push:
+    branches: 
+      - source
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: setup node
+      uses: actions/setup-node@master
+    
+    - name: checkout boilerplate
+      uses: actions/checkout@v2
+      with:
+        repository: DiscreteTom/dt-blog-boilerplate
+      
+    - name: checkout blog
+      uses: actions/checkout@v2
+      with:
+        ref: source
+        
+    - name: npm install & generate
+      run: |
+        npm install
+        npm run generate
+    
+    - name: deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: master # The branch the action should deploy to.
+        FOLDER: dt-blog-boilerplate/dist # The folder the action should deploy.
+      
