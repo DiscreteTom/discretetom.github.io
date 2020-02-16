@@ -22,7 +22,6 @@ jobs:
         
     - name: npm install & generate
       run: |
-        cp discretetom.github.io/* dt-blog-boilerplate
         cd dt-blog-boilerplate
         npm install
         npm run generate
@@ -30,5 +29,5 @@ jobs:
     - name: GitHub Pages Deploy
       uses: maxheld83/ghpages@v0.2.1
       env:
-        BUILD_DIR: dt-blog-boilerplate/dt-blog-boilerplate/dist
+        BUILD_DIR: dt-blog-boilerplate/dist
       
