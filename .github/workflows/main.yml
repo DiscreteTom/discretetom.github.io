@@ -24,6 +24,7 @@ jobs:
         
     - name: npm install & generate
       run: |
+        tree
         cp -r contentRepo/* boilerplateRepo
         cd boilerplateRepo/dt-blog-boilerplate
         npm install
