@@ -37,4 +37,5 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.GH_PAT }}
         BRANCH: master # The branch the action should deploy to.
         FOLDER: boilerplateRepo/dt-blog-boilerplate/dist # The folder the action should deploy.
+        BASE_BRANCH: source
       
