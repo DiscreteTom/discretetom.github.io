@@ -6,4 +6,4 @@ email: 'discrete_tom@outlook.com' # author email address
 author: 'DiscreteTom' # author github username
 folderIcon: mdi-folder-outline # mdi icon name
 fileIcon: mdi-file # mdi icon name
-orderDecider: '#' # 用来确定内容顺序
+orderDecider: '@' # 用来确定内容顺序
