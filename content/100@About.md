@@ -1,5 +1,6 @@
 ---
 description: "Yo, this is DiscreteTom"
+toc: false
 ---
 
 **DiscreteTom**
