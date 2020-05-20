@@ -20,6 +20,8 @@ tags:
 
 ### Setup Squid
 
+Install dependencies, add an http basic auth user.
+
 ```bash
 yum -y install squid httpd
 htpasswd -c /etc/httpd/htpasswd-users <proxy-username> # will ask you to set your proxy password
@@ -29,13 +31,10 @@ Edit `/etc/squid/squid.conf`:
 - At the top of the file, add the following line:
   - `auth_param basic program /usr/lib64/squid/basic_ncsa_auth /etc/httpd/htpasswd-users`
 - After the part of `acl`, add the following lines:
-  - `acl pubnet src all`
   - `acl need_auth proxy_auth REQUIRED`
 - In the `http_access` part
   - Before `allow localnet`, add the following line:
     - `http_access deny !need_auth`
-  - After `allow localhost`, add the following line:
-    - `http_access allow pubent`
 
 Start squid: `systemctl start squid`
 
