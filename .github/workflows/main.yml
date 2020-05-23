@@ -33,18 +33,19 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: before npm install & generate
+      - name: move content
         run: |
           cp -r contentRepo/* boilerplateRepo
-          cd boilerplateRepo/dt-blog-boilerplate
 
       - name: install if cache miss
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
+          cd boilerplateRepo/dt-blog-boilerplate
           npm install
 
       - name: generate
         run: |
+          cd boilerplateRepo/dt-blog-boilerplate
           npm run generate
 
       - name: deploy
