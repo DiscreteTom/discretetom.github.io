@@ -49,7 +49,7 @@ tags:
 
 在MyLabel的构造函数中添加如下代码
 
-```c++
+```cpp
 setFocusPolicy(Qt::ClickFocus);
 ```
 
@@ -57,7 +57,7 @@ setFocusPolicy(Qt::ClickFocus);
 
 如果想要测试效果 可以在MyLabel类中添加如下protected方法
 
-```c++
+```cpp
 //需要#include <QFocusEvent>
 void focusInEvent(QFocusEvent * ev);//获取焦点时的操作
 void focusOutEvent(QFocusEvent * ev);//失去焦点时的操作
@@ -65,7 +65,7 @@ void focusOutEvent(QFocusEvent * ev);//失去焦点时的操作
 
 然后在cpp文件内添加
 
-```c++
+```cpp
 void MyLabel::focusInEvent(QFocusEvent * ev)
 {
 	setText(tr("focusIn"));
@@ -83,7 +83,7 @@ void MyLabel::focusOutEvent(QFocusEvent * ev)
 
 在MyLabel中添加如下protected方法
 
-```c++
+```cpp
 //需要#include <QKeyEvent>
 void keyPressEvent(QKeyEvent * ev);
 ```
@@ -91,7 +91,7 @@ void keyPressEvent(QKeyEvent * ev);
 
 在cpp文件中添加函数定义
 
-```c++
+```cpp
 void MyLabel::keyPressEvent(QKeyEvent * ev)
 {
 	QString str = text();//获取原字符串
@@ -118,7 +118,7 @@ void MyLabel::keyPressEvent(QKeyEvent * ev)
 
 首先在MyLabel的构造函数中添加如下代码
 
-```c++
+```cpp
 setAttribute(Qt::WA_InputMethodEnabled, true);
 ```
 
@@ -132,14 +132,14 @@ Qt是这么介绍WA_InputMethodEnabled的:
 
 在MyLabel类中添加如下protected方法
 
-```c++
+```cpp
 //需要#include <QInputMethodEvent>
 void inputMethodEvent(QInputMethodEvent * ev);
 ```
 
 然后在cpp文件添加函数定义
 
-```c++
+```cpp
 void MyLabel::inputMethodEvent(QInputMethodEvent * ev)
 {
 	QString str = text();//获取原字符串
@@ -157,13 +157,13 @@ void MyLabel::inputMethodEvent(QInputMethodEvent * ev)
 
 按照网上的说法 除了
 
-```c++
+```cpp
 setAttribute(Qt::WA_InputMethodEnabled, true);
 ```
 
 之外 还要有一条语句
 
-```c++
+```cpp
 setAttribute(Qt::WA_KeyCompression, true);
 ```
 

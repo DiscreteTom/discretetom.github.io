@@ -21,7 +21,7 @@ HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
 
 参考代码:
 
-```c++
+```cpp
 /* if auto start for all users
  * HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Run
  * else if auto start for current user
@@ -67,7 +67,7 @@ if (autoStart){
 
 在注册表文件的命令后面添加参数
 
-```c++
+```cpp
 //reg.setValue(appName,strAppPath);
 reg.setValue(appName, strAppPath + tr(" autoStart")); //注意tr函数中有一个空格
 ```
@@ -76,7 +76,7 @@ reg.setValue(appName, strAppPath + tr(" autoStart")); //注意tr函数中有一�
 
 添加如下代码
 
-```c++
+```cpp
 //MainWindow w;
 //如果有命令行参数而且参数是开机自启动
 if (argc > 1 && (argv[1] == MainWindow::tr("autoStart"))){//注意tr函数中没有空格

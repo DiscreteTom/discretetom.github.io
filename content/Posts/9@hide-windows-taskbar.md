@@ -40,20 +40,20 @@ tags:
 
 MainWindow添加头文件
 
-```c++
+```cpp
 #include <qhotkey.h>
 ```
 
 添加私有成员
 
-```c++
+```cpp
 QHotkey * hotkey;
 bool taskBarIsHidden;
 ```
 
 构造函数初始化，这里的快捷键选择了和网上相似软件一样的**Ctrl+~**
 
-```c++
+```cpp
 hotkey = new QHotkey(QKeySequence("Ctrl+`"), true, this);//设置快捷键、默认启动
 connect(hotkey, &QHotkey::activated, this, &MainWindow::getHotKeyPressed);//连接快捷键能够触发的功能
 taskBarIsHidden = false;//默认任务栏是显示的
@@ -61,7 +61,7 @@ taskBarIsHidden = false;//默认任务栏是显示的
 
 添加接收信号的槽函数
 
-```c++
+```cpp
 void MainWindow::getHotKeyPressed()
 {
 	HWND hwnd=::FindWindow(L"Shell_TrayWnd",NULL);//查找任务栏句柄
@@ -76,7 +76,7 @@ void MainWindow::getHotKeyPressed()
 
 为了防止意外情况程序关闭导致任务栏一去不复返，在MainWindow的析构函数中添加显示任务栏的代码，在一定程度上补救一下
 
-```c++
+```cpp
 MainWindow::~MainWindow()
 {
 	HWND hwnd=::FindWindow(L"Shell_TrayWnd",NULL);

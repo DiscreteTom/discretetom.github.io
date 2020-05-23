@@ -9,7 +9,7 @@ tags:
 
 在main函数靠前的位置添加如下代码
 
-```c++
+```cpp
 //need #include<windows.h>
 HANDLE hMutex = CreateMutex(NULL, false, (LPCTSTR)"YourAppName");
 if (GetLastError() == ERROR_ALREADY_EXISTS){

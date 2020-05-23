@@ -50,7 +50,7 @@ RC_ICONS = ToDoStack.ico
 
 需要的头文件
 
-```c++
+```cpp
 #include <QAction>//用来生成鼠标点击托盘图标后出现的菜单
 #include <QMenu>//用来生成鼠标点击托盘图标后出现的菜单
 #include <QSystemTrayIcon>//托盘图标类
@@ -58,7 +58,7 @@ RC_ICONS = ToDoStack.ico
 
 给MainWindow.h添加私有子控件指针
 
-```c++
+```cpp
 QSystemTrayIcon * icon;//托盘图标
 QAction * actionShow;//显示窗口操作
 QAction * actionClose;//退出程序操作
@@ -69,7 +69,7 @@ QMenu * menu;//菜单
 
 注意从资源文件获取图标的时候路径**不是:/myicon/img/ToDoStack.png而是:/img/ToDoStack.png**
 
-```c++
+```cpp
 icon = new QSystemTrayIcon(this);//获取托盘图标对象
 QIcon thisIcon(":/img/ToDoStack.png");//从资源文件获取托盘图标的图标文件
 icon->setIcon(thisIcon);//设置托盘图标的图标文件
@@ -86,7 +86,7 @@ connect(actionClose, &QAction::triggered, this, &MainWindow::getExit);
 
 在头文件添加对应的槽
 
-```c++
+```cpp
 void trayClicked(QSystemTrayIcon::ActivationReason reason);//此处参数类型不能改动，因为要匹配对应的信号
 void getShow();
 void getExit();
@@ -94,7 +94,7 @@ void getExit();
 
 在源文件中完成函数
 
-```c++
+```cpp
 void MainWindow::trayClicked(QSystemTrayIcon::ActivationReason reason)
 {
 	switch (reason){//reason为托盘图标被触发的形式
@@ -120,13 +120,13 @@ void MainWindow::getExit()
 
 最后，拦截主窗口自身的关闭操作，实现点击关闭按钮时默认隐藏到托盘的效果
 
-```c++
+```cpp
 #include <QCloseEvent>//用来拦截窗口关闭事件
 ```
 
 在头文件中添加protected方法
 
-```c++
+```cpp
 void closeEvent(QCloseEvent * e);
 ```
 
@@ -134,7 +134,7 @@ void closeEvent(QCloseEvent * e);
 
 最后在源文件完善函数
 
-```c++
+```cpp
 void MainWindow::closeEvent(QCloseEvent *e)
 {
 	e->ignore();//忽略原本的关闭操作

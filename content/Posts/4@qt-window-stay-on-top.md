@@ -9,13 +9,13 @@ tags:
 
 实现窗口置顶代码
 
-```c++
+```cpp
 setWindowFlags(Qt::WindowStaysOnTopHint);
 ```
 
 取消窗口置顶代码
 
-```c++
+```cpp
 setWindowFlags(!Qt::WindowStaysOnTopHint);//add a '!' compared with the upper one
 ```
 
@@ -23,7 +23,7 @@ setWindowFlags(!Qt::WindowStaysOnTopHint);//add a '!' compared with the upper on
 
 所以如果不想因为改变窗口置顶状态而隐藏/显示窗口，需要如下代码
 
-```c++
+```cpp
 //set Window Stay On Top
 if (!isHidden()){
 	hide();
@@ -38,13 +38,13 @@ if (!isHidden()){
 
 参考了网上的很多博客，得到的结论基本一致，使用如下代码实现窗口置顶
 
-```c++
+```cpp
 setWindowFlags(Qt::WindowStaysOnTopHint);
 ```
 
 但是取消窗口置顶，网上的说法就不一致了。我查到的是以下两种
 
-```c++
+```cpp
 setWindowFlags(Qt::CustomizeWindowHint);
 setWindowFlags(Qt::Widget);
 ```
