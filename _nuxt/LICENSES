@@ -1,5 +1,5 @@
 /*!
-  * vue-router v3.1.5
+  * vue-router v3.2.0
   * (c) 2020 Evan You
   * @license MIT
   */
@@ -11,8 +11,8 @@
  */
 
 /*!
- * clipboard.js v2.0.4
- * https://zenorocha.github.io/clipboard.js
+ * clipboard.js v2.0.6
+ * https://clipboardjs.com/
  * 
  * Licensed MIT © Zeno Rocha
  */
@@ -29,8 +29,8 @@
  * Released under the MIT License.
  */
 
-/**
- * vuex v3.1.2
- * (c) 2019 Evan You
+/*!
+ * vuex v3.4.0
+ * (c) 2020 Evan You
  * @license MIT
  */
