@@ -2,6 +2,7 @@
 date: 2020-04-06
 title: Setup HTTPS Proxy
 description: Based on Squid & Stunnel with free TLS certificate.
+img: squid.jpg
 tags:
   - Network
 ---
