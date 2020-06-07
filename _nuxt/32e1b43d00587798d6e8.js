@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[156],{1223:function(n,o){n.exports={title:"Academic",description:"这里存放了大学的笔记。由于历史悠久，不保证内容正确性"}}}]);
