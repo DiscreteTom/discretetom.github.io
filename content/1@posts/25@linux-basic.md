@@ -28,12 +28,12 @@ tags:
       - RHEL（有些功能收费）
       - **CentOS**
         - 完全照抄RHEL以至于RedHat把它买了
-    - 使用RPM管理`rpm`格式的包，命令为`rpm`，也可以使用`yum`。[`yum`在RPM系统中添加了自动更新和依赖管理。](https://www.ibm.com/developerworks/cn/linux/l-lpic1-v3-102-5/index.html)
+    - 使用RPM管理`rpm`格式的包（RPM包），命令为`rpm`，也可以使用`yum`。[`yum`在RPM系统中添加了自动更新和依赖管理。](https://www.ibm.com/developerworks/cn/linux/l-lpic1-v3-102-5/index.html)
   - Debian系列
     - Debian
     - Ubuntu
       - 常用于教学，但是不适合服务器
-    - 使用APT管理`deb`格式的包，命令为`apt`。现在也可以安装RPM包
+    - 使用APT管理`deb`格式的包（DPKG包），命令为`apt`。现在也可以安装RPM包
 
 ## 常见开源软件
 
