@@ -283,3 +283,89 @@ RHEL的文件权限最后如果有一个`.`则表示文件受SELinux保护。可
 - `Ctrl-U`删除光标之前的命令
 - `Ctrl-Y`粘贴`Ctrl-U`剪切掉的内容
 
+## 驱动
+
+加载驱动的四个等级：
+
+- 直接放入系统内核。系统启动时必须的驱动，较少
+- 以模块的形式放入硬盘。保存在`/lib/modules/<kernel-version>/kernel`中。较多。后缀为`.ko`
+- 驱动可以被Linux识别，但是系统认为其不常用，所以默认不加载。如果要使用，需要重新编译内核。NTFS驱动就属于这种情况，不过第三方的`NTFS-3G`插件可以以模块的形式安装NTFS驱动
+- 硬件不能被Linux内核识别，需要手动安装驱动
+
+## 挂载命令
+
+### 概述
+
+- `lsblk`查看磁盘
+- `fdisk -l`查看磁盘分区信息，包括swap分区
+- `mount`
+  - `mount [-l]`查询已经挂载的设备。`-l`表示卷标
+  - `mount -a`根据`/etc/fstab`的内容自动挂载。如果找不到设备会启动错误。此命令可以用来测试配置文件是否正确，但是此命令有一定的容错能力，不要完全依赖此命令进行检错
+  - `mount [-t <file-system>] [-L <label>] [-o <options>] <device-name> <mount-point>`把设备文件`device-name`挂载到`mount-point`目录上
+    - 文件系统：`ext3`、`ext4`等。系统会自动识别，所以这个选项可以不写
+    - `-L`：按照卷标挂载，而不是按照设备文件名挂载
+    - `-o`用来指定读写权限、同步异步等
+- `umount <mount-point|device_name>`卸载设备
+  - 如果设备正在被其他程序使用，则无法卸载。可以`kill`掉目标进程
+
+> 为什么`mount`一定要挂载在空目录？其实目录非空也可以，目录里面的内容也不会被覆盖，卸载设备之后还是可以访问里面的内容，但是挂载着其他设备的时候，这些文件没有入口，显然是不合理的。所以不建议挂载设备到非空目录
+
+### 挂载NTFS分区
+
+Linux默认不支持NTFS。苹果系(Unix)可以只读访问NTFS
+
+Linux需要安装驱动。官方驱动需要重新编译内核，且只能只读NTFS中的文件。可以使用第三方的NTFS-3G避免编译内核来访问NTFS。但是还是不建议使用驱动的方式访问文件。基于网络的访问多香啊
+
+## 中文编码
+
+在Linux中使用中文有两个条件：
+
+- 安装了中文编码与中文字体
+- 操作终端支持中文。纯字符终端不支持中文
+
+可以修改环境变量`LANG`来设置终端字符集：
+
+- `zh_CN.UTF-8`表示中文
+- `en_US.UTF-8`表示英文
+
+使用`mount`挂载设备的时候需要手动指定编码才能支持中文显示：`-o iocharset=utf8`
+
+## vim
+
+> 此内容不适合入门vim
+
+### 常见设置命令
+
+- `:set nu`/`:set nonu`显示/取消行号
+- `:syntax on`/`:syntax off`启动/关闭语法高亮
+- `:set hlsearch`/`:set nohlsearch`是否把查找的字符串高亮
+- `:set ruler`/`:set noruler`是否显示右下角状态栏
+- `:set showmode`/`:set noshowmode`是否显示左下角状态栏
+- `:set list`/`:set nolist`是否显示隐藏字符
+  - `Tab`用`^I`表示
+  - 换行用`$`表示
+  - 回车用`^M`表示。所以windows下的回车换行会表示为`^M$`
+  - 可以使用命令`dos2unix`或`unix2dos`来转换文件格式
+- `:set all`查看所有参数
+
+上面的修改只能临时生效。可以修改`~/.vimrc`配置文件来永久生效
+
+### 替换命令
+
+- `:m,ns/old/new/g`表示替换第`m`行到第`n`行所有`old`为`new`
+- `:%s/old/new/g`替换全文的`old`为`new`
+
+其中`old`的格式为**正则表达式**，如`^`为行首，`$`为行尾
+
+### 其他
+
+- `:r <filename>`可以在光标处导入文件
+- `:!<command>`执行系统命令，可以用来查看系统信息
+- `:r !<command>`导入命令结果
+- `:map <key> <command>`绑定快捷键
+  - `:map ^P I#<ESC>` - 按下Ctrl+P的时候在行首加入注释。注意：其中的`^P`不是手工输入，而是使用`Ctrl+V Ctrl+P`来输入的。其他字符手工输入
+  - `:map ^B ^x` - 按下Ctrl+B的时候，删除行首第一个字母
+- `:ab <source> <target>`字符自动替换
+  - `:ab mymail discrete_tom@outlook.com` - 设置之后，一旦输入`mymail`加空格或回车，会自动替换为`discrete_tom@outlook.com`
+- `vim -o file1 file2`上下分屏打开多个文件，使用`Ctrl+W`加上下箭头切换文件
+- `vim -O file1 file2`左右分屏打开多个文件，使用`Ctrl+W`加左右箭头切换文件
