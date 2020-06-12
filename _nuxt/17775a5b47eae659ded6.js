@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[2],{1244:function(n,t,e){"use strict";e.r(t);var o={head:{title:"404",meta:[{hid:"description",name:"description",content:"404 not found"}]}},c=e(43),component=Object(c.a)(o,(function(){var n=this.$createElement;return(this._self._c||n)("div",[this._v("\n  404\n")])}),[],!1,null,null,null);t.default=component.exports}}]);
