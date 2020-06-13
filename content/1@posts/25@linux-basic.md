@@ -158,6 +158,13 @@ RHEL中可以使用`setup`命令配置`ip`。其他系统可以修改配置文�
 
 使用`ifconfig`查看网卡信息。网卡`lo`为环回网卡
 
+
+> 如果网卡已经设置了onboot但是启动服务器后发现网卡没有启动，可能是网卡UUID冲突导致（比如因为使用了镜像）。
+> 解决方案：
+> 1. 修改`/etc/sysconfig/network-scripts/ifcfg-eth0`中的MAC地址行。这样服务器就会重新生成MAC地址并计算UUID。
+> 2. 删除`/etc/udev/rules.d/70-persistent-net.rules`，此文件记录了MAC地址和UUID的绑定。
+> 3. 重启服务器即可获得新的UUID
+
 ### 安装系统产生的日志文件
 
 安装后会得到三个日志文件
