@@ -7,3 +7,11 @@ author: 'DiscreteTom' # author github username
 folderIcon: mdi-folder-outline # mdi icon name
 fileIcon: mdi-file # mdi icon name
 orderDecider: '@' # 用来确定内容顺序
+headScripts: # to append custom scripts
+  - src: https://www.googletagmanager.com/gtag/js?id=UA-137885294-1
+    async: true
+  - innerHTML: |
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-137885294-1');
