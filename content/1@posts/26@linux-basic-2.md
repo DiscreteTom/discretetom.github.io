@@ -14,7 +14,7 @@ tags:
 
 本文中的一些描述混合了我的奇妙理解，添加了一些云计算相关知识
 
-有些内容与[大学的笔记](https://discretetom.github.io/academic/LinuxProgrammingEnvironment/)重复，建议先看大学的笔记
+有些内容与[大学的笔记](/academic/LinuxProgrammingEnvironment/)重复，建议先看大学的笔记
 
 ## 常用命令
 
