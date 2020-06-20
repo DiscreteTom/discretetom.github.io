@@ -2,9 +2,7 @@
 title: Linux Basic (part 6)
 description: shell编程
 tags:
-  - linux
   - shell
-  - ops
 ---
 
 ## 前言

@@ -1,9 +1,6 @@
 ---
 title: Linux Basic (part 2)
 description: 文件、用户、压缩、重启、网络、系统痕迹相关命令
-tags:
-  - linux
-  - ops
 ---
 
 ## 前言

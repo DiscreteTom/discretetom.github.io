@@ -1,9 +1,6 @@
 ---
 title: Linux Basic (part 4)
 description: 用户管理、权限管理
-tags:
-  - linux
-  - ops
 ---
 
 ## 前言

@@ -1,9 +1,6 @@
 ---
 title: Linux Basic (part 7)
 description: 启动引导、修复系统、运行级别、服务管理等
-tags:
-  - linux
-  - ops
 ---
 
 ## 前言

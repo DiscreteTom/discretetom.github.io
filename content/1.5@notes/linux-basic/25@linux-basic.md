@@ -1,9 +1,6 @@
 ---
 title: Linux Basic
 description: Linux版本分类、磁盘分区、文件系统、系统目录
-tags:
-  - linux
-  - ops
 ---
 
 ## 前言

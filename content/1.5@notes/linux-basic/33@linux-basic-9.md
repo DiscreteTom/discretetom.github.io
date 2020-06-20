@@ -1,9 +1,6 @@
 ---
 title: Linux Basic (part 9)
 description: 日志管理
-tags:
-  - linux
-  - ops
 ---
 
 ## 前言

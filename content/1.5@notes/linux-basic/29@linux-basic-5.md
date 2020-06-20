@@ -1,9 +1,6 @@
 ---
 title: Linux Basic (part 5)
 description: 磁盘分区、格式化、挂载、配额、LVM
-tags:
-  - linux
-  - ops
 ---
 
 ## 前言

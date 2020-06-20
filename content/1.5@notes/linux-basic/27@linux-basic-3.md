@@ -1,9 +1,6 @@
 ---
 title: Linux Basic (part 3)
 description: 软件包、RPM、yum、源码安装相关
-tags:
-  - linux
-  - ops
 ---
 
 ## 前言

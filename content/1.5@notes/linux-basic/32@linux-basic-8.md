@@ -1,9 +1,6 @@
 ---
 title: Linux Basic (part 8)
 description: 进程管理、后台任务管理、定时任务等
-tags:
-  - linux
-  - ops
 ---
 
 ## 前言
