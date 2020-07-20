@@ -1,7 +1,7 @@
 ---
 title: JWT概述
 description: 如何生成JWT、JWT相比传统鉴权方式的优点
-tag:
+tags:
   - web
 ---
 
