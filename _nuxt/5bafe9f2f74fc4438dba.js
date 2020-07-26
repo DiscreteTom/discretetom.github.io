@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[163],{1140:function(o,n){o.exports={title:"计算机图形学",description:"Computer Graphics"}}}]);
