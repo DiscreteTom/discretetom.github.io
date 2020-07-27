@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[170],{1089:function(e,n){e.exports={title:"Mind",description:"此文件夹保存了一些非技术性想法",icon:"mdi-thought-bubble-outline",reverse:!0}}}]);
