@@ -1,6 +1,6 @@
 ---
 title: Distributed transaction
-description: 
+description: 分布式事务的解决方案
 tags:
   - Database
   - Distributed System
