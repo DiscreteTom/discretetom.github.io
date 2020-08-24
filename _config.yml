@@ -15,3 +15,8 @@ headScripts: # to append custom scripts
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'UA-137885294-1');
+friends:
+  - title: 卡拉搜索/kalasearch
+    url: https://kalasearch.cn/
+    description: 托管的站内搜索引擎服务
+friendsIcon: mdi-open-in-new
