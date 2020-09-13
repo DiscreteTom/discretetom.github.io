@@ -1,6 +1,7 @@
 ---
 description: "Yo, this is DiscreteTom"
 toc: false
+siblings: false
 ---
 
 - 半个架构师。
