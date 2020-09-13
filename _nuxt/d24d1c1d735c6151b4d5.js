@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[173],{1086:function(n,o){n.exports={title:"Linux Basic",description:"Linux基础知识",tags:["linux","ops"]}}}]);
