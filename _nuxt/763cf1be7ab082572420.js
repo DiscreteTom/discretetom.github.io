@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[193],{1266:function(e,n){e.exports={title:"毕设论文/BachelorThesis",description:"云环境下双向验证的远程数据完整性审计研究/Research on Remote Data Integrity Auditing with Bidirectional Verification in Cloud"}}}]);
