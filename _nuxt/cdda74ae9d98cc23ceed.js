@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[196],{1213:function(o,n){o.exports={title:"数据库系统概念",description:"Concept of Database"}}}]);
