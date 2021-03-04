@@ -1,6 +1,6 @@
 ---
 title: Redis相关知识点的总结
-description: RDB/AOF持久化、缓存雪崩、穿透、击穿
+description: RDB/AOF持久化、缓存雪崩、穿透、击穿、主从复制
 tags:
   - Redis
 ---
@@ -82,10 +82,41 @@ Append-Only File
 - 如果是单体应用，可以使用分布式锁
   - 多个线程争夺一个互斥锁。拿到锁的线程负责访问数据库并更新到Redis，其他线程短暂sleep后重新访问Redis而不是数据库。这样就只会有一个请求打到数据库
 
+## 主从复制
+
+- leader/follower(master/slave)架构
+  - 一个主库可以有多个从库(replica)
+  - 从库可以有从库(sub-replica)，形成级联架构
+  - 从4.0开始，从库的从库会收到和从库一样的来自主库的指令流。所以即使向从库写数据，从库的从库也不会同步这些数据
+- 从库会试图维持和主库完全一致
+- 主库会向从库输出一个指令流(a stream of commands)
+- 连接断开时从库会主动尝试重连
+  - 重连后会试图仅获取断开连接后丢失的指令流(部分同步，partial resynchronization)
+  - 如果部分同步无法实现，从库会申请全量同步(full resynchronization)
+    - 主库会对当前状态进行快照并发送给从库。然后继续同步指令流
+- 默认使用异步复制，从而保证低延迟、高性能。主库不会被阻塞
+- 可以对主库使用`WAIT`命令来等待复制完毕（触发同步复制）
+- 从库可以用来实现持久化，即主库不负责持久化，仅从库持久化
+  - **这会有些危险**：如果主库重启，主库是没有数据的，如果从库从主库同步数据，从库的数据也会丢失
+- 从库对主库使用`PSYNC`命令请求复制
+  - 在从库的配置文件中写入`replicaof <ip> <port>`即可
+  - 或者对从库执行`REPLICAOF`命令
+  - 老版本的redis使用`SYNC`命令。它的协议比较老，且不支持部分同步
+- 只读副本
+  - 从2.6开始，副本默认进入只读模式
+  - 配置项：`replica-read-only`
+  - 即使向副本中写数据，在进行主从同步时，向从库写入的数据也会丢失
+- 鉴权
+  - 配置项`masterauth <password>`
+- 从库在NAT之后
+  - 从库连接主库时会使用`INFO`命令/`ROLE`命令，这两个命令中包含从库的IP地址
+  - 如果使用了NAT或者Docker之类的IP/端口映射，那么会导致请求IP和命令中的IP不符
+  - 使用`replica-announce-ip <ip>`和`replica-announce-port <port>`来解决
 
 ## 参考
 
 - [Redis中两种持久化机制RDB和AOF](https://bilibili.com/video/BV1U54y1C7rm)
 - [什么是Redis缓存雪崩、穿透、击穿](https://bilibili.com/video/BV1f5411b7ux)
+- [Redis复制(官方文档)](https://redis.io/topics/replication)
 
 
