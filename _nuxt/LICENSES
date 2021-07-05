@@ -1,25 +1,32 @@
 /*!
-  * vue-router v3.2.0
-  * (c) 2020 Evan You
+  * vue-router v3.5.2
+  * (c) 2021 Evan You
   * @license MIT
   */
 
 /*!
- * Vue.js v2.6.11
- * (c) 2014-2019 Evan You
+ * Vue.js v2.6.14
+ * (c) 2014-2021 Evan You
  * Released under the MIT License.
  */
 
 /*!
- * clipboard.js v2.0.6
+ * vuex v3.6.2
+ * (c) 2021 Evan You
+ * @license MIT
+ */
+
+
+/*!
+ * clipboard.js v2.0.8
  * https://clipboardjs.com/
- * 
+ *
  * Licensed MIT © Zeno Rocha
  */
 
 /*!
- * vue-client-only v2.0.0
- * (c) 2019-present egoist <0x142857@gmail.com>
+ * vue-client-only v0.0.0-semantic-release
+ * (c) 2021-present egoist <0x142857@gmail.com>
  * Released under the MIT License.
  */
 
@@ -27,10 +34,4 @@
  * vue-no-ssr v1.1.1
  * (c) 2018-present egoist <0x142857@gmail.com>
  * Released under the MIT License.
- */
-
-/*!
- * vuex v3.4.0
- * (c) 2020 Evan You
- * @license MIT
  */
