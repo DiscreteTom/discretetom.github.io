@@ -60,17 +60,11 @@ static ip_address=xxx.xxx.xxx.xxx/24
 static routers=xxx.xxx.xxx.xxx
 ```
 
-## 启用SSH
-
-虽然树莓派上面有`systemctl`，但是一开始`sshd`没有被`systemctl`接管，所以无法`sudo systemctl start sshd`
-
-可以直接：`sudo /etc/init.d/ssh start`，此方案可以临时启动ssh，重启后失效
-
-如果要永久开启SSH服务，可以：
+## 启用SSH和VNC
 
 1. `sudo raspi-config`
 2. 选择`Interface Options`
-3. 选择`SSH`，跟着提示激活即可
+3. 选择`SSH`或`VNC`，跟着提示激活即可
 
 ## 配置软件镜像
 
@@ -122,6 +116,39 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
 
+## 远程GUI访问
+
+如果安装系统的时候选择的是lite版本（没有图形界面），可以使用如下命令安装图形界面
+
+```bash
+sudo apt install xserver-xorg xinit
+sudo apt install raspberrypi-ui-mods
+```
+
+然后执行`sudo raspi-config`，修改`Display Settings`里面的`Resolution`，任意选择一个非默认的分辨率。
+
+重启，然后启动桌面：`sudo startx`
+
+最后使用vnc连接即可
+
+如果连接之后没有任务栏，可以在GUI里面开一个terminal，然后执行`lxpanel`
+
+## 使用sysfs控制GPIO
+
+```bash
+# 开始使用18引脚。使用BCM引脚编号
+# 此操作后，`/sys/class/gpio`下面会多一个文件夹：`gpio18`
+echo 18 > /sys/class/gpio/export
+# 设置引脚为输出模式
+echo out > /sys/class/gpio/gpio18/direction
+# 设置高电平/低电平
+echo 1 > /sys/class/gpio/gpio18/value
+# 释放引脚
+echo 18 > /sys/class/gpio/unexport
+```
+
+查看GPIO的使用情况：`cat /sys/kernel/debug/gpio`。如果此文件不存在，可以手动挂载一下debug文件系统：`mount -t debugfs none /sys/kernel/debug`
+
 ## 参考
 
 - [Raspberry Pi OS](https://www.raspberrypi.org/software/)
@@ -139,3 +166,7 @@ sudo systemctl restart docker
 - [is my linux ARM 32 or 64 bit?](https://unix.stackexchange.com/questions/136407/is-my-linux-arm-32-or-64-bit)
 - [How to install docker on a Raspberry Pi Zero W running Raspbian Buster](https://markmcgookin.com/2019/08/04/how-to-install-docker-on-a-raspberry-pi-zero-w-running-raspbian-buster/)
 - [Docker Hub 镜像加速器](https://gist.github.com/y0ngb1n/7e8f16af3242c7815e7ca2f0833d3ea6)
+- [Turn a 'lite' install into a 'desktop' install?](https://www.raspberrypi.org/forums/viewtopic.php?t=202060)
+- [How do I upgrade Raspbian Lite to Raspbian PIXEL?](https://raspberrypi.stackexchange.com/questions/65848/how-do-i-upgrade-raspbian-lite-to-raspbian-pixel)
+- [树莓派的GPIO控制](https://zhuanlan.zhihu.com/p/40594358)
+- [Setting GPIO using sysfs fails in i.MX6](https://stackoverflow.com/questions/48535503/setting-gpio-using-sysfs-fails-in-i-mx6)
