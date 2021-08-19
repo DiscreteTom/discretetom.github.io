@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[294],{1230:function(n,o,w){n.exports=w.p+"img/squid.fdf7456.jpg"}}]);
