@@ -1,12 +1,12 @@
 title: DiscreteTom's Blog
 root: posts # 选择`content`文件夹下的一个文件或目录作为`/`路径的页面
 defaultLanguage: en # 文件后缀没有指明语言时默认使用的语言
-repo: 'https://github.com/DiscreteTom/discretetom.github.io' # github repo address
-email: 'discrete_tom@outlook.com' # author email address
-author: 'DiscreteTom' # author github username
+repo: "https://github.com/DiscreteTom/discretetom.github.io" # github repo address
+email: "discrete_tom@outlook.com" # author email address
+author: "DiscreteTom" # author github username
 folderIcon: mdi-folder-outline # mdi icon name
 fileIcon: mdi-file # mdi icon name
-orderDecider: '@' # 用来确定内容顺序
+orderDecider: "@" # 用来确定内容顺序
 headScripts: # to append custom scripts
   - src: https://www.googletagmanager.com/gtag/js?id=UA-137885294-1
     async: true
@@ -16,9 +16,27 @@ headScripts: # to append custom scripts
       gtag('js', new Date());
       gtag('config', 'UA-137885294-1');
 friends:
+  - title: dt-blog-boilerplate
+    url: https://github.com/DiscreteTom/dt-blog-boilerplate
+    description: 此博客的模板
+  - title: Omnitrix
+    url: https://discretetom.github.io/Omnitrix
+    description: 实用工具集
+  - title: Infrontier
+    url: https://github.com/DiscreteTom/Infrontier
+    description: 基于Electron开发的AWS S3客户端，把AWS S3当网盘用
   - title: 卡拉搜索/kalasearch
     url: https://kalasearch.cn/
     description: 托管的站内搜索引擎服务
+  - title: TaskbarKiller-v3
+    url: https://github.com/DiscreteTom/TaskbarKiller-v3
+    description: 干掉你的Windows任务栏
+  - title: cmdHere
+    url: https://github.com/DiscreteTom/cmdHere
+    description: 在文件夹的右键菜单中添加 CMD Here
+  - title: electron-nuxt
+    url: https://github.com/michalzaq12/electron-nuxt
+    description: 使用Electron+Nuxt快速构建桌面应用程序
 friendsIcon: mdi-open-in-new
 searchName: DT Blog
 searchDescription: DiscreteTom's Blog
