@@ -89,7 +89,9 @@ npm install <username>/<repo>
 
 1. 在 Unity3D Editor 里面，创建一个文件夹用来放 npm/yarn 管理的依赖。比如`Assets/Modules/`
 2. 在此文件夹中，执行`yarn init -y`创建空的`package.json`文件
-3. 执行`yarn install xxx`就可以自动安装所需的所有依赖啦！
+3. 执行`yarn add xxx`就可以安装所需的依赖啦！
+   1. 另外，建议把`node_modules/`添加到`.gitignore`，或者添加完整的 NodeJS 的[`.gitignore`](https://github.com/github/gitignore/blob/main/Node.gitignore)
+   2. 当需要在其他机器下载项目的时候，也需要执行`yarn` / `yarn install`来安装所有依赖
 
 ![](./_img/40-1.png)
 
@@ -104,4 +106,9 @@ npm install <username>/<repo>
 
 当然此博客只是一个思路。使用其他包管理工具也可以实现类似的效果。
 
-使用 npm/yarn 只是因为 nodejs 比较方便跨平台安装（特别是 windows），依赖管理方案也比较统一/直观/成熟，安装的依赖也默认安装在工作目录。
+使用 npm/yarn 是因为 nodejs：
+
+- 比较方便跨平台安装（特别是 windows）
+- 依赖管理方案比较统一/直观/成熟
+- 支持从 github 下载依赖
+- 安装的依赖也默认安装在工作目录
