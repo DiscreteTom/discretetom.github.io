@@ -91,6 +91,18 @@ deb http://mirrors.tuna.tsinghua.edu.cn/raspberrypi/ buster main ui
 curl https://sh.rustup.rs -sSf | sh
 ```
 
+## 配置 Golang
+
+下载与安装，参考[官方文档](https://go.dev/doc/install)
+
+因为在中国大陆，所以要配置 Proxy 才能顺利开发，否则执行`go get/run/build`等命令会卡死
+
+```bash
+export GOPROXY=https://goproxy.io,direct
+```
+
+利用 Go 语言进行嵌入式开发，可以看下 [gobot](https://gobot.io/) 和[tinygo](https://tinygo.org/)
+
 ## 安装 docker
 
 > 树莓派 Zero w 是`armv61`架构的 32 位处理器（使用`uname -m`查看。ARM v8 之前都是 32 位），正常的 docker 安装方式可能无效，有些镜像可能也无法正常工作
@@ -177,3 +189,4 @@ echo 18 > /sys/class/gpio/unexport
 - [树莓派的 GPIO 控制](https://zhuanlan.zhihu.com/p/40594358)
 - [Setting GPIO using sysfs fails in i.MX6](https://stackoverflow.com/questions/48535503/setting-gpio-using-sysfs-fails-in-i-mx6)
 - [Other Rust Installation Methods](https://forge.rust-lang.org/infra/other-installation-methods.html)
+- [go get/run/build 等命令无反应](https://blog.csdn.net/weixin_42306122/article/details/107571480)
