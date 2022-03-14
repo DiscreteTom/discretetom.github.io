@@ -12,7 +12,9 @@ description: 遇事不决，重装系统！
   - 其他增量备份工具使用起来比较麻烦，而且也是备份文件系统，备份文件不会太小
 - 而使用 pi-gen 进行自定义的镜像构建，我们只需要保存几个 shell 脚本来定义【如何构建镜像】就可以了，完全不用备份所有系统文件，而且易于修改
 
-## [pi-gen](https://github.com/RPi-Distro/pi-gen)
+## 工具
+
+[pi-gen](https://github.com/RPi-Distro/pi-gen)
 
 - 是树莓派官方构建 Raspberry Pi OS images (Previously known as Raspbian)的工具
 - 对宿主机的操作系统有要求，详见官方 [README](https://github.com/RPi-Distro/pi-gen)。我测试了 AWS Lightsail 的 Debian Buster 是没有问题的
