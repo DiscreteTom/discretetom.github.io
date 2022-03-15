@@ -95,10 +95,11 @@ curl https://sh.rustup.rs -sSf | sh
 
 下载与安装，参考[官方文档](https://go.dev/doc/install)
 
-因为在中国大陆，所以要配置 Proxy 才能顺利开发，否则执行`go get/run/build`等命令会卡死
+因为在中国大陆，所以要配置 [Proxy](https://goproxy.io/) 才能顺利开发，否则执行`go get/run/build`等命令会卡死
 
 ```bash
-export GOPROXY=https://goproxy.io,direct
+echo "export GOPROXY=https://goproxy.io,direct" >> /etc/profile
+source /etc/profile
 ```
 
 利用 Go 语言进行嵌入式开发，可以看下 [gobot](https://gobot.io/) 和[tinygo](https://tinygo.org/)
