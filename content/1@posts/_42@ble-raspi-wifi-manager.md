@@ -1,6 +1,6 @@
 ---
-title: 基于浏览器使用蓝牙给树莓派配网
-description: 当然，除了配网，还可以干很多事情
+title: 基于浏览器使用蓝牙管理树莓派
+description: 比如：配置wifi
 ---
 
 ## Why
@@ -65,7 +65,7 @@ Tinygo 的 [bluetooth](https://github.com/tinygo-org/bluetooth) 库使用起来�
 
 这当然是不现实的。所以我[魔改了一下这个库](https://github.com/DiscreteTom/bluetooth)，提了一个 [issue](https://github.com/tinygo-org/bluetooth/issues/94) 和一个 [PR](https://github.com/tinygo-org/bluetooth/pull/95)。目前先用我魔改过的库是可以实现事件驱动查询信息了。
 
-最终成果：[raspi-ble-wifi-manager](https://github.com/DiscreteTom/raspi-ble-wifi-manager)
+最终成果：[ble-raspi-manager](https://github.com/DiscreteTom/ble-raspi-manager)
 
 ## 基于 Web 实现跨平台客户端
 
@@ -101,7 +101,7 @@ value = await char.readValue();
 await char.writeValue(new Uint8Array([0, 1, 2, 3, 4]));
 ```
 
-前端目前部署到了 [Omnitrix](https://discretetom.github.io/Omnitrix/raspi-wifi-manager)
+前端目前部署到了 [Omnitrix](https://discretetom.github.io/Omnitrix/ble-raspi-manager)
 
 ## Ref
 
