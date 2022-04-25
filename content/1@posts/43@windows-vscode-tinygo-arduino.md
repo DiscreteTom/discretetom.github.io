@@ -7,7 +7,7 @@ description: Go语言可比C/C++写起来爽多了
 
 **以下代码使用 Windows Powershell 执行**
 
-### 安装 scoop
+### 安装 Scoop
 
 ```powershell
 # PowerShell must be allowed to execute local scripts for your user account
@@ -22,10 +22,17 @@ iwr -useb get.scoop.sh | iex
 scoop install go
 ```
 
-### 安装 TinyGo 及其工具链
+### 安装 TinyGo
 
 ```powershell
 scoop install tinygo
+```
+
+### 安装 AVR 相关工具
+
+因为 Arduino Nano 的处理器是 AVR 架构，所以需要安装 AVR 相关工具
+
+```powershell
 scoop install avr-gcc
 scoop install avrdude
 ```
