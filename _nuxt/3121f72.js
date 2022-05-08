@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[239],{1274:function(n,o){n.exports={title:"人工智能原理",description:"AI Principle"}}}]);
