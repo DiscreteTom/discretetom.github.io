@@ -282,61 +282,58 @@ $$
 根据不同的情况，$\ket{\psi_2}$有不同的值：
 
 $$
-\text{ if } f \text{ is constant and } f(0) = f(1) = 0:
+\begin{aligned}
+\text{ if } f \text{ is constant and } f(0) & = f(1) = 0 \text{ then }
 \\
-\ket{\psi_2} = \frac{\ket{00} - \ket{01} + \ket{10} - \ket{11}}{2}
+\ket{\psi_2} & = \frac{\ket{00} - \ket{01} + \ket{10} - \ket{11}}{2}
 \\
-= \frac12 \begin{bmatrix}
+& = \frac12 \begin{bmatrix}
   1 \\ -1 \\ 1 \\ -1
 \end{bmatrix}
 = H \ket{0} H \ket{1}
 \\
-\text{ if } f \text{ is constant and } f(0) = f(1) = 1:
+\text{ if } f \text{ is constant and } f(0) & = f(1) = 1 \text{ then }
 \\
-\ket{\psi_2} = \frac{\ket{01} - \ket{00} + \ket{11} - \ket{10}}{2}
+\ket{\psi_2} & = \frac{\ket{01} - \ket{00} + \ket{11} - \ket{10}}{2}
 \\
-= \frac12 \begin{bmatrix}
+& = \frac12 \begin{bmatrix}
   -1 \\ 1 \\ -1 \\ 1
 \end{bmatrix}
 = - H \ket{0} H \ket{1}
 \\
-\text{ if } f \text{ is balanced and } f(0) = 1 , f(1) = 0:
+\text{ if } f \text{ is balanced and } f(0) & = 1 , f(1) = 0 \text{ then }
 \\
-\ket{\psi_2} = \frac{\ket{01} - \ket{00} + \ket{10} - \ket{11}}{2}
+\ket{\psi_2} & = \frac{\ket{01} - \ket{00} + \ket{10} - \ket{11}}{2}
 \\
-= \frac12 \begin{bmatrix}
+& = \frac12 \begin{bmatrix}
   -1 \\ 1 \\ 1 \\ -1
 \end{bmatrix}
 = - H \ket{1} H \ket{0}
 \\
-\text{ if } f \text{ is balanced and } f(0) = 0 , f(1) = 1:
+\text{ if } f \text{ is balanced and } f(0) & = 0 , f(1) = 1 \text{ then }
 \\
-\ket{\psi_2} = \frac{\ket{00} - \ket{01} + \ket{11} - \ket{10}}{2}
+\ket{\psi_2} & = \frac{\ket{00} - \ket{01} + \ket{11} - \ket{10}}{2}
 \\
-= \frac12 \begin{bmatrix}
+& = \frac12 \begin{bmatrix}
   1 \\ -1 \\ -1 \\ 1
 \end{bmatrix}
 = H \ket{1} H \ket{1}
+\end{aligned}
 $$
 
 接下来我们需要对第一个量子位进行$H$操作，从而得到$\ket{\psi_3}$。而$H$是$H$的反函数，所以我们可以轻易得出：
 
 $$
-\text{ if } f \text{ is constant and } f(0) = f(1) = 0:
-\\
-\ket{\psi_3} = \ket{0} H \ket{1}
-\\
-\text{ if } f \text{ is constant and } f(0) = f(1) = 1:
-\\
-\ket{\psi_3} = - \ket{0} H \ket{1}
-\\
-\text{ if } f \text{ is balanced and } f(0) = 1 , f(1) = 0:
-\\
-\ket{\psi_3} = - \ket{1} H \ket{1}
-\\
-\text{ if } f \text{ is balanced and } f(0) = 0 , f(1) = 1:
-\\
-\ket{\psi_3} = \ket{1} H \ket{1}
+\begin{aligned}
+\text{ if } f \text{ is constant and } f(0) & = f(1) = 0 \text{ then } \\
+\ket{\psi_3} & = \ket{0} H \ket{1} \\
+\text{ if } f \text{ is constant and } f(0) & = f(1) = 1 \text{ then } \\
+\ket{\psi_3} & = - \ket{0} H \ket{1} \\
+\text{ if } f \text{ is balanced and } f(0) & = 1 , f(1) = 0 \text{ then } \\
+\ket{\psi_3} & = - \ket{1} H \ket{1} \\
+\text{ if } f \text{ is balanced and } f(0) & = 0 , f(1) = 1 \text{ then } \\
+\ket{\psi_3} & = \ket{1} H \ket{1}
+\end{aligned}
 $$
 
 可以看出来，如果$f$是 constant，那么第一个量子位测量出来一定是 0。如果$f$是 balanced，那么第一个量子位测量出来一定是 1
