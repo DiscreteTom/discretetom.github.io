@@ -353,6 +353,10 @@ $$
   - 观测的时候，会坍缩。所以量子位的数量决定了量子计算机的吞吐
   - 我们并不能拿到并行计算的所有结果，所以量子计算应该适用于大量输入、少量输出的场景，比如 reduce
 
+## 工具
+
+[量子计算机在线模拟器](https://davidbkemp.github.io/jsqubits/jsqubitsRunner.html)
+
 ## Ref
 
 - [【完结】大一新生也能懂的量子计算](https://www.bilibili.com/video/BV1oq4y1j7iZ)
