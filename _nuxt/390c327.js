@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[253],{1325:function(n,o){n.exports={title:"计算机组成原理",description:"Computer Organization Principle"}}}]);
