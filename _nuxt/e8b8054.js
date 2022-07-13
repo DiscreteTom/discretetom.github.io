@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[280],{436:function(n,o,w){n.exports=w.p+"img/kano.16dbba2.png"}}]);
