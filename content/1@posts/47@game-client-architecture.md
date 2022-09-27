@@ -29,7 +29,7 @@ tags:
 1. 因为 APP 是 Scene 中的唯一顶层 GameObject，所以 APP 一定会被首先创建
 2. APP 创建 Core
 3. APP 创建各个 Controller，并把 Core 提供给各个 Controller
-4. Controller 从 Scene 中获取需要管理的 View，并注册 View 的事件回调函数
+4. Controller 从 Scene 中获取需要管理的 View，并注册 View 的事件回调函数。Controller 可能还需要注册 Core 里面的回调函数
 
 ### 处理用户输入或其他事件
 
@@ -44,6 +44,12 @@ tags:
 ### 生命周期管理
 
 比如 Start/Update 之类的，都仅在 APP 里面进行。APP 可以驱动 Controller 实现逻辑 Update
+
+### 业务逻辑与表现的分离，团队合作
+
+业务逻辑基本都在 Core 里面进行。Controller 通过 Command 触发业务逻辑，Core 通过 Event 通知 Controller 更新视图
+
+这样，在团队分工合作中，可以由高级程序员编写 Command/Events，由初级程序员实现 View/Controller。只要接口（也就是 Command/Events）被定义好即可
 
 ## APP
 
@@ -120,12 +126,10 @@ public class App : MonoBehaviour {
     // construct core
     this.core = new Core();
     // sync fetch
-    this.core.PlayerData = Addressables.LoadAssetAsync<PlayerData>("Assets/PlayerData.asset").WaitForCompletion();
+    this.core.Config = Addressables.LoadAssetAsync<Config>("Assets/Config.asset").WaitForCompletion();
   }
 }
 ```
-
-当然，也可以使用 ScriptableObject 保存全局配置/Global Config
 
 ### 响应式
 
@@ -182,6 +186,8 @@ public class SomeController {
   }
 }
 ```
+
+如果不想自己实现 Watch，可以直接使用[这里的代码片段](https://github.com/DiscreteTom/unity3d-utils/tree/main/General/Watch)
 
 ### 事件/消息
 
@@ -318,3 +324,7 @@ public class SomeView : MonoBehaviour {
   }
 }
 ```
+
+## 示例项目
+
+[复刻了一波 BBTAN](https://github.com/DiscreteTom/BBTAN)
