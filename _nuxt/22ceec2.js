@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[270],{1188:function(n,o){n.exports={title:"GRE",description:"备考GRE时的笔记"}}}]);
