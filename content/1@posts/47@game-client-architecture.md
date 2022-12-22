@@ -199,9 +199,89 @@ public class SomeController : MonoBehaviour {
 
 ## Controllers
 
-原则：
+### 原则
 
 - Controller 可以通过 App 获得 Core
 - Controller 之间是互相无法感知的，需要通过 Core 进行 Controller 之间的交互
 
 上面已经有一些 Controller 的示例了。如果要更好得结合 App 和 Controller，可以参考我实现的 [Framework 库](https://github.com/DiscreteTom/unity3d-utils/tree/main/General/Framework)
+
+### 获取 Core
+
+因为 Core 是 App 创建的，所以 Controller 需要额外的操作才能获取到 Core
+
+在上面的例子中，我们使用`GameObject.Find("App").GetComponent<App>().core`的方式获取 core。如果确保 App 是 Scene 里面的根元素，也可以使用`transform.root.GetComponent<App>().core`等方式获取 Core
+
+因为业务逻辑会频繁使用 Core，所以建议在 `Start` 函数中获取 Core 并保存为成员变量（除非使用下文提到的 Composable 思路）
+
+### Composable
+
+我实现的 [Framework 库](https://github.com/DiscreteTom/unity3d-utils/tree/main/General/Framework)中，Controller 继承了 `ComposableBehaviour`
+
+`ComposableBehaviour` 的功能是提供了 `OnUpdate` 等函数，并禁用了 `Update` 函数，所以所有业务逻辑都可以在 `Start` 函数中实现
+
+```cs
+// 传统写法
+public class A : MonoBehaviour {
+  void Start() {
+    ...
+  }
+
+  void Update() {
+    ...
+  }
+}
+
+// 使用ComposableBehaviour
+public class B : ComposableBehaviour {
+  void Start() {
+    ...
+
+    this.OnUpdate.AddListener(() => { ... });
+  }
+}
+```
+
+之所以这么设计，是受到前端框架 vue 3.x 的影响，尝试把业务逻辑相近的变量和函数写到物理距离更近的位置:
+
+```cs
+// 传统写法
+public class A : MonoBehaviour {
+  // 业务逻辑A
+  int a;
+
+  // 业务逻辑B
+  int b;
+
+  void Start() {
+    // 业务逻辑A
+    this.a = 1;
+
+    // 业务逻辑B
+    this.b = 1;
+  }
+
+  void Update() {
+    // 业务逻辑A
+    ...
+
+    // 业务逻辑B
+    ...
+  }
+}
+
+// 使用ComposableBehaviour
+public class B : ComposableBehaviour {
+  void Start() {
+    // 业务逻辑A
+    var a = 1;
+    this.OnUpdate.AddListener(() => { ... });
+
+    // 业务逻辑B
+    var b = 1;
+    this.OnUpdate.AddListener(() => { ... });
+  }
+}
+```
+
+可以看到，使用 ComposableBehaviour，可以使业务逻辑更加紧凑，而不是分散在多个函数中。同时，通过闭包捕获上下文的变量，可以减少成员变量的使用，减少代码量
