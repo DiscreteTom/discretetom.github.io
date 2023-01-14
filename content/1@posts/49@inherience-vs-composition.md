@@ -80,3 +80,35 @@ class ChildA {
   }
 }
 ```
+
+## 二者结合
+
+子类作为容器，并通过函数指针等方式修改父类的功能
+
+```ts
+class Parent {
+  foo: () => number;
+
+  constructor(foo: () => number) {
+    this.foo = foo;
+  }
+
+  bar() {
+    return this.foo();
+  }
+}
+
+class ChildA {
+  parent: Parent;
+
+  constructor() {
+    // 修改父类的功能
+    this.parent = new Parent(() => 1);
+  }
+
+  foo() {
+    // 代理父类的功能
+    return this.parent.bar();
+  }
+}
+```
