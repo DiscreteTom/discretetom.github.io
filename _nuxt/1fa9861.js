@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[965],{1062:function(n,o,w){n.exports=w.p+"img/2-23.80874c9.png"}}]);
