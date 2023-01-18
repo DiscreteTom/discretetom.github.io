@@ -19,9 +19,18 @@ friends:
   - title: dt-blog-boilerplate
     url: https://github.com/DiscreteTom/dt-blog-boilerplate
     description: 此博客的模板
+  - title: retsac
+    url: https://github.com/DiscreteTom/retsac
+    description: 编译器前端框架，用来快速构建属于你自己的编译器
+  - title: tcping
+    url: https://github.com/DiscreteTom/tcping
+    description: 用来测试socket延迟的命令行工具
   - title: Omnitrix
     url: https://discretetom.github.io/Omnitrix
-    description: 实用工具集
+    description: 浏览器中的实用工具集
+  - title: mdcg
+    url: https://github.com/DiscreteTom/mdcg
+    description: 把代码片段渲染进Markdown
   - title: Infrontier
     url: https://github.com/DiscreteTom/Infrontier
     description: 基于Electron开发的AWS S3客户端，把AWS S3当网盘用
