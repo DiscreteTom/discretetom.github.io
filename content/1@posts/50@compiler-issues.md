@@ -184,6 +184,14 @@ parser
   );
 ```
 
+## 查询语法规则
+
+语法规则中可能有很多 grammar，比如`pub fn identifier '(' params ')' type '{' stmts '}'`，默认情况下可以通过`ParserContext.matched`基于索引访问它们：`matched[0]`表示`pub`
+
+但是通过索引来访问很不直观，而且当语法规则被修改时，可能很多索引都要修改
+
+所以 retsac 提供了基于 grammar 的搜索功能，可以直接定位到相应的 grammar：`ParserContext.$('identifier')`和`ParserContext.matched[2]`是等价的，只不过前者更易维护。如果一个语法规则中含有多个同名的 grammar，比如`id id`，那么`$('id')`会返回第一个`id`，`$('id', 1)`会返回第二个`id`。字面量也可以这样查询：`` $(`'{'`) ``
+
 ## Expectational Parser
 
 在实现 retsac 时，一开始的设计思路为：先使用 lexer 把输入的整个字符串解析为一个很长的 token list，然后使用 parser 直接处理这个 token list
@@ -221,6 +229,10 @@ interface ILexer {
 在使用 Expectational Parser 的时候，虽然我们可以使用 expect 让 lexer 返回我们想要的 token 类型，但是有时候我们可能有很多种想要的 token，造成很多的可能性。如果一种 token 无法使 parse 过程继续下去，我们就需要回溯状态，尝试 expect 其他的 token。也就是说，需要让 lexer 有 re-lex 的功能，可以回溯
 
 不过 retsac 并没有基于这种思路来做，而是给 lexer 添加了 clone（有状态复制）功能，在存在多种可能性的时候，保存多个 lexer。需要回溯的时候，直接把过去保存的 lexer 拿出来用就行。这个思路可能性能差一些，未来有机会了可以优化一下
+
+另外，因为 re-lex 可能会导致一些`callback`函数被多次调用，可能还需要添加`rollback`机制，使对外界的操作可以回滚。retsac 的 DefinitionContext 提供了此功能
+
+re-lex 还可能会带来运行时的性能问题，如果用户的输入很长，可能会回滚过多，导致不必要的重复处理。所以，retsac 的 parser 有 commit 功能，在用户觉得合适的时候，可以调用`parser.commit`，确认现有的修改不会再被 re-lex。为了方便使用，retsac 还在 ParserContext 中也添加了 commit 选项，可以实现【当某个语法规则被 accept 的时候自动 commit】的效果
 
 ## 优化运行时
 
