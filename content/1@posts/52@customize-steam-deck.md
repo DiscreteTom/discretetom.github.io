@@ -64,7 +64,6 @@ steamos-readonly disable
 echo "keyserver hkps://keyserver.ubuntu.com" >> /etc/pacman.d/gnupg/gpg.conf
 pacman-key --init
 pacman-key --populate
-pacman-key --refresh-keys
 
 # 退出root用户
 exit
