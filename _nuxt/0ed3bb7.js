@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[280],{1173:function(n,o){n.exports={title:"金融经济学"}}}]);
