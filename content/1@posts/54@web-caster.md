@@ -94,7 +94,7 @@ controller1.addEventListener("connected", (e) => {
 
 ### 画面分辨率
 
-视频画面在 ThreeJS 里面渲染的时候清晰度有明显的下降。参考网上的一些说法，修改 VideoTexture 的 minFilter/magFilter 似乎也没用，感觉像是 VR 设备自身分辨率的限制。如果有图形学大神，欢迎联系我，感激不尽！
+视频画面在 ThreeJS 里面渲染的时候清晰度有明显的下降。参考网上的一些说法，修改 VideoTexture 的 minFilter/magFilter 似乎也没用，感觉像是 VR 设备自身分辨率的限制，但是不使用 WebXR 而是直接播放视频又会清晰很多。如果有图形学大神可以解答此问题，欢迎联系我，感激不尽！
 
 ### 内网服务器
 
