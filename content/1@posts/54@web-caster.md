@@ -1,6 +1,6 @@
 ---
 title: WebCaster 开发笔记
-description: VR 远程桌面，但能用 Web 我就绝不 Native！
+description: VR 远程投屏，但能用 Web 我就绝不 Native！
 ---
 
 ## 概述
