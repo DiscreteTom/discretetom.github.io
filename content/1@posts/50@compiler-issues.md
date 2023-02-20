@@ -291,13 +291,13 @@ const parser = new ELR.ParserBuilder<number>()
         '}'
       `,
     },
-    ELR.traverser(({ children }) => {
+    ELR.traverser(({ $ }) => {
       // store the function name to the var map, with a random value to test
-      varMap.set(children![1].text!, 123);
+      varMap.set($(`identifier`)!.text!, 123);
       // store the parameter name to the var map, with a random value to test
-      varMap.set(children![3].text!, 456);
+      varMap.set($(`identifier`, 1)!.text!, 456);
       // traverse the function body
-      children![6].traverse();
+      $(`stmt`)!.traverse();
     })
   )
   .define(
