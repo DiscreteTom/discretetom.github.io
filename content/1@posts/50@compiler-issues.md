@@ -184,7 +184,7 @@ parser
   );
 ```
 
-## 查询语法规则
+## 定位语法
 
 语法规则中可能有很多 grammar，比如`pub fn identifier '(' params ')' type '{' stmts '}'`，默认情况下可以通过`ParserContext.matched`基于索引访问它们：`matched[0]`表示`pub`
 
@@ -241,3 +241,75 @@ re-lex 还可能会带来运行时的性能问题，如果用户的输入很长�
 不过，这些检查只需要在开发阶段使用，一旦确定语法规则无误，所有冲突都被解决，就不需要再进行检测了。
 
 这些检测非常消耗性能，可能需要反复构建 DFA，或者遍历所有规则。所以能不检测就不检测，仅在开发时进行各种检测就行
+
+## 遍历语法树获得结果
+
+有些时候，我们无法在生成语法树之后就直接获取结果。或者，使用 Re-Lex 之后，我们需要定义复杂的回滚操作。
+
+这在实现一个编程语言的编译器/解析器时尤其重要，因为语句和语句之间是有序的，而 LR 分析法是在从右向左进行 reduce，而不是从左向右（从前往后）
+
+比如，假设我们在解析如下输入：
+
+```ts
+function hello(a) {
+  return a;
+}
+```
+
+我们定义了如下语法规则：
+
+```ts
+const parser = new ELR.ParserBuilder<number>()
+  .entry("fn_def_stmt")
+  .define({
+    fn_def_stmt: `
+      function identifier '(' identifier ')' '{'
+        stmt ';'
+      '}'
+    `,
+  })
+  .define({ stmt: `return exp` })
+  .define({ exp: `identifier` });
+```
+
+那么在构造语法树的时候，会先 reduce 出来 exp，然后是 stmt，最后是 fn_def_stmt。然而，我们在 exp 里面就引用了函数的参数`a`，此时我们还没有对 fn_def_stmt 进行处理，自然找不到这个变量
+
+为了解决这个问题，一个 workaround 是把 fn_def_stmt 拆的更零散一些，以确保参数在 stmt 之前就被处理，而不是把参数放在 fn_def_stmt 里面，但是这有悖于 retsac 简单直观的设计思想
+
+这个时候，如果我们直接对生成的语法树进行自顶向下遍历（而不是自底向上生成），就没有那么多问题了。在遍历的过程中，我们会先遍历到 fn_def_stmt，把参数保存为一个局部变量，然后再深入里面的 stmt/exp，就可以正常解析
+
+retsac 提供了 traverser，可以方便地进行自顶向下遍历函数的设置：
+
+```ts
+const parser = new ELR.ParserBuilder<number>()
+  .entry("fn_def_stmt")
+  .define(
+    {
+      fn_def_stmt: `
+        function identifier '(' identifier ')' '{'
+          stmt ';'
+        '}'
+      `,
+    },
+    ELR.traverser(({ children }) => {
+      // store the function name to the var map, with a random value to test
+      varMap.set(children![1].text!, 123);
+      // store the parameter name to the var map, with a random value to test
+      varMap.set(children![3].text!, 456);
+      // traverse the function body
+      children![6].traverse();
+    })
+  )
+  .define(
+    { stmt: `return exp` },
+    // return expression value
+    ELR.traverser(({ children }) => children![1].traverse())
+  )
+  .define(
+    { exp: `identifier` },
+    // get the value of the variable from the map
+    ELR.traverser(({ children }) => varMap.get(children![0].text!)!)
+  );
+```
+
+这样，在语法树构建完毕之后，我们只需要对根节点进行一次`node.traverse()`调用，就可以得到想要的结果
