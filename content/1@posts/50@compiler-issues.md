@@ -186,11 +186,13 @@ parser
 
 ## 定位语法
 
-语法规则中可能有很多 grammar，比如`pub fn identifier '(' params ')' type '{' stmts '}'`，默认情况下可以通过`ParserContext.matched`基于索引访问它们：`matched[0]`表示`pub`
+语法规则中可能有很多 grammar，比如`pub fn identifier '(' params ')' identifier '{' stmts '}'`，默认情况下可以通过`ParserContext.matched`基于索引访问它们：`matched[0]`表示`pub`
 
 但是通过索引来访问很不直观，而且当语法规则被修改时，可能很多索引都要修改
 
-所以 retsac 提供了基于 grammar 的搜索功能，可以直接定位到相应的 grammar：`ParserContext.$('identifier')`和`ParserContext.matched[2]`是等价的，只不过前者更易维护。如果一个语法规则中含有多个同名的 grammar，比如`id id`，那么`$('id')`会返回第一个`id`，`$('id', 1)`会返回第二个`id`。字面量也可以这样查询：`` $(`'{'`) ``
+所以 retsac 提供了基于 grammar 的搜索功能，可以直接定位到相应的 grammar：`ParserContext.$('identifier')[0]`和`ParserContext.matched[2]`是等价的，只不过前者更易维护
+
+另外，还可以使用`@`为一个 grammar 命名，以便区分相同类型的 grammar。比如 `pub fn identifier@funcName '(' params ')' identifier@retType '{' stmts '}'`，那么我们可以使用`$('funcName')`来定位到第一个`identifier`。需要注意：一旦使用了`@`，就无法根据原名进行查询了
 
 ## Expectational Parser
 
@@ -313,3 +315,212 @@ const parser = new ELR.ParserBuilder<number>()
 ```
 
 这样，在语法树构建完毕之后，我们只需要对根节点进行一次`node.traverse()`调用，就可以得到想要的结果
+
+## 高级语法规则
+
+我们定义语法规则时，可能希望像正则表达式一样使用`|+?*()`等元字符，比如
+
+```ts
+define({
+  fn_def: `
+    pub fn identifier '(' (param (',' param)*)? ')' ':' identifier '{'
+      stmt*
+    '}'
+  `,
+});
+```
+
+为了能够处理这样的定义，我们需要对这些元字符进行展开处理：
+
+```ts
+// define({ def: `a b?` });
+define({ def: `a b | a` });
+
+// define({ def: `a b*` });
+define({ def: `a b+ | a` });
+
+// define({ def: `a b+` });
+define({
+  def: `a __0`, // 这个情况比较复杂，我们需要引入一个占位符
+  __0: `b | __0 b`, // 也可以是`b | b __0`，但是这样会引入RS冲突
+});
+```
+
+所以我们需要把上述函数定义给展开为：
+
+```ts
+define({
+  fn_def: `
+    pub fn identifier '(' ')' ':' identifier '{'
+    '}'
+    |
+    pub fn identifier '(' ')' ':' identifier '{'
+      __1
+    '}'
+    |
+    pub fn identifier '(' param ')' ':' identifier '{'
+    '}'
+    |
+    pub fn identifier '(' param __0 ')' ':' identifier '{'
+    '}'
+    |
+    pub fn identifier '(' param ')' ':' identifier '{'
+      __1
+    '}'
+    |
+    pub fn identifier '(' param __0 ')' ':' identifier '{'
+      __1
+    '}'
+  `,
+  __0: `',' param | __0 ',' param`,
+  __1: `stmt | __1 stmt`,
+});
+```
+
+这样，处理后的语法规则就可以被原本的 ParserBuilder 进行处理。
+
+retsac 提供了 `AdvancedBuilder` 用来实现展开元字符的功能：
+
+```ts
+new AdvancedBuilder()
+  .define({
+    fn_def: `
+      pub fn identifier '(' (param (',' param)*)? ')' ':' identifier '{'
+        stmt*
+      '}'
+    `,
+  })
+  .expand(); // return ParserBuilder
+```
+
+> `AdvancedBuilder` 内部也是使用 ELR Parser 来对元字符进行识别的
+
+需要注意，因为我们会生成占位符作为非终结符，那么最终生成的 AST 中就会包含多余的节点。比如我对下面的输入进行解析：
+
+```
+pub fn main(p1: i32, p2: i32): i32 {
+  let a: i32 = 1;
+  let b: i32 = 2;
+  let c: i32 = a + b;
+  return a + b + c;
+}
+```
+
+生成的 AST：
+
+```
+fn_def:
+  pub: pub
+  fn: fn
+  identifier: main
+  <anonymous>: (
+  param:
+    identifier: p1
+    <anonymous>: :
+    identifier: i32
+  __0:
+    <anonymous>: ,
+    param:
+      identifier: p2
+      <anonymous>: :
+      identifier: i32
+  <anonymous>: )
+  <anonymous>: :
+  identifier: i32
+  <anonymous>: {
+  __1:
+    __1:
+      __1:
+        __1:
+          stmt:
+            assign_stmt:
+              let: let
+              identifier: a
+              <anonymous>: :
+              identifier: i32
+              <anonymous>: =
+              exp:
+                integer: 1
+              <anonymous>: ;
+        stmt:
+          assign_stmt:
+            let: let
+            identifier: b
+            <anonymous>: :
+            identifier: i32
+            <anonymous>: =
+            exp:
+              integer: 2
+            <anonymous>: ;
+      stmt:
+        assign_stmt:
+          let: let
+          identifier: c
+          <anonymous>: :
+          identifier: i32
+          <anonymous>: =
+          exp:
+            exp:
+              identifier: a
+            <anonymous>: +
+            exp:
+              identifier: b
+          <anonymous>: ;
+    stmt:
+      ret_stmt:
+        return: return
+        exp:
+          exp:
+            exp:
+              identifier: a
+            <anonymous>: +
+            exp:
+              identifier: b
+          <anonymous>: +
+          exp:
+            identifier: c
+        <anonymous>: ;
+  <anonymous>: }
+```
+
+可以看到里面有很多嵌套的 `__0` 和 `__1`
+
+## 递归查询子节点
+
+使用 AdvancedBuilder 时，我们如何处理 ParserContext 呢？比如我想获取 `fn_def` 里面的所有 `stmt`，就不能简单地使用 `children` 来进行获取了
+
+```ts
+new AdvancedBuilder().define(
+  {
+    fn_def: `
+      pub fn identifier '(' (param (',' param)*)? ')' ':' identifier '{'
+        stmt*
+      '}'
+    `,
+  },
+  ELR.traverser(({ children }) => {
+    // 这里是无法基于children来获取stmt的
+    // 因为占位符会生成很多中间节点
+  })
+);
+```
+
+但是我们可以使用 `$` 来进行查询。 ParserBuilder 支持 `cascadeQueryPrefix` 参数，如果在用 `$` 进行子节点查询时，子节点的类型是以 `cascadeQueryPrefix` 开头的，则会对子节点也进行递归查询
+
+AdvancedBuilder 在生成 ParserBuilder 时，会自动设置这个参数，所以使用 AdvancedBuilder 生成的 Parser，会自动对占位符子节点进行递归查询，并按顺序返回 ASTNode 列表
+
+```ts
+new AdvancedBuilder().define(
+  {
+    fn_def: `
+      pub fn identifier '(' (param (',' param)*)? ')' ':' identifier '{'
+        stmt*
+      '}'
+    `,
+  },
+  ELR.traverser(({ $ }) => {
+    $("stmt") // => 返回 stmt 节点的列表
+      .forEach((stmt) => stmt.traverse()); // 可以直接对 stmt 进行遍历
+  })
+);
+```
