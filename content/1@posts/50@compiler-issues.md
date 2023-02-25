@@ -342,7 +342,7 @@ define({ def: `a b+ | a` });
 // define({ def: `a b+` });
 define({
   def: `a __0`, // 这个情况比较复杂，我们需要引入一个占位符
-  __0: `b | __0 b`, // 也可以是`b | b __0`，但是这样会引入RS冲突
+  __0: `b | b __0`,
 });
 ```
 
@@ -523,4 +523,58 @@ new AdvancedBuilder().define(
       .forEach((stmt) => stmt.traverse()); // 可以直接对 stmt 进行遍历
   })
 );
+```
+
+## 计算终结符的 Follow 集
+
+通常我们说 First/Follow 集，都是在说非终结符。但是，终结符的 Follow 集也是需要计算的，因为有些非终结符的 Follow 集需要用到终结符的 Follow 集
+
+举个例子：假设`test`是非终结符，`a/b/c`都是终结符，我们定义了如下语法：
+
+```ts
+new AdvancedBuilder().define({
+  test: `a b c?`,
+});
+```
+
+它会被展开为：
+
+```ts
+define({
+  test: `a b | a b c`,
+});
+```
+
+显然，此时存在 Reduce-Shift 冲突，因为当我们检测到输入串为`abc`时，我们不知道应该直接把`ab`给 reduce 为`test`，还是先进行移进，然后把`abc`给 reduce 为`test`。为了解决这个冲突，我们需要对 `test` 的 Follow 集进行检测，此时`c`应该在`test`的 Follow 集中
+
+如果我们仅计算非终结符的 Follow 集，就无法正确得出`test`的 Follow 集。比如把终结符`b`的 Follow 集也给计算出来，才能正确计算`test`的 Follow 集
+
+## 为高级语法规则自动解决冲突
+
+同样是上文的例子，我们使用`a b c?`来定义`test`，但是我们通常希望这个匹配的过程是贪心的，即如果遇到了`c`，那就一定要把`abc`作为一个整体进行 reduce
+
+所以我们在展开的时候，不仅要展开语法的定义，还应该自动解决冲突
+
+```ts
+define({
+  test: `a b | a b c`,
+}).resolveRS({ test: `a b` }, { test: `a b c` }, { next: `c`, reduce: false });
+```
+
+同理，对于`+`和`*`也要进行类似的处理：
+
+```ts
+// test: `a b c+`
+define({
+  test: `a b __0`,
+  __0: `c | c __0`,
+}).resolveRS({ __0: `c` }, { __0: `c __0` }, { next: `c`, reduce: false });
+
+// test: `a b c*`
+define({
+  test: `a b | a b __0`,
+  __0: `c | c __0`,
+})
+  .resolveRS({ test: `a b` }, { test: `a b __0` }, { next: `c`, reduce: false })
+  .resolveRS({ __0: `c` }, { __0: `c __0` }, { next: `c`, reduce: false });
 ```
