@@ -556,6 +556,7 @@ define({
 所以我们在展开的时候，不仅要展开语法的定义，还应该自动解决冲突
 
 ```ts
+// test: `a b c?`
 define({
   test: `a b | a b c`,
 }).resolveRS({ test: `a b` }, { test: `a b c` }, { next: `c`, reduce: false });
@@ -578,3 +579,14 @@ define({
   .resolveRS({ test: `a b` }, { test: `a b __0` }, { next: `c`, reduce: false })
   .resolveRS({ __0: `c` }, { __0: `c __0` }, { next: `c`, reduce: false });
 ```
+
+以上是`+*?`出现在末尾的情况。如果`+*?`出现在语法规则的开头，可能也需要进行处理
+
+```ts
+// test: `a? b c`
+define({
+  test: `b c | a b c`,
+}); // => 存在RR冲突？
+```
+
+但是实际情况中，这些冲突通常会被自动解决（Follow 集不重叠，或者不会出现在同一个 DFA State 里）
