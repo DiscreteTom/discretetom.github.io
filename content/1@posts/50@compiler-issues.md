@@ -589,4 +589,34 @@ define({
 }); // => 存在RR冲突？
 ```
 
-但是实际情况中，这些冲突通常会被自动解决（Follow 集不重叠，或者不会出现在同一个 DFA State 里）
+但是实际情况中，这些头部冲突通常会被自动解决（Follow 集不重叠，或者不会出现在同一个 DFA State 里）
+
+## 使用星号解决所有冲突
+
+我们继续来讨论`+*?`出现在末尾的情况。有时候，我们直接指定`next`，可能并不能解决所有冲突。比如：
+
+```ts
+new AdvancedBuilder().define({
+  test: `a+`,
+  a: `b | c`,
+});
+
+// expand
+define({
+  test: `__0`,
+  __0: `a | a __0`,
+  a: `b | c`,
+}).resolveRS({ __0: `a` }, { __0: `a __0` }, { next: `a`, reduce: false });
+```
+
+在这个例子里，`a`是非终结符，而不是终结符。所以这里`next: a`并不能 cover 所有的情况，我们需要判断`a`的 follow 集和`__0`的 first 集的交集，并且都`reduce: false`。为了简单起见，也可以不取交集，直接拿`__0`的 first 集来用
+
+所以，生成的 Resolver 不能仅把`next`设置为`a`。可以设置为一个特殊值：`*`。需要注意：`*`并不是表示【任何情况】，而仅仅是【next 是`__0`的 first】
+
+```ts
+define({
+  test: `__0`,
+  __0: `a | a __0`,
+  a: `b | c`,
+}).resolveRS({ __0: `a` }, { __0: `a __0` }, { next: `*`, reduce: false });
+```
