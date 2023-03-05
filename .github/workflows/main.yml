@@ -10,7 +10,8 @@ jobs:
     steps:
       - name: setup node
         uses: actions/setup-node@master
-
+        with:
+          node-version: 16
       - name: checkout boilerplate
         uses: actions/checkout@v2
         with:
