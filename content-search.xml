@@ -1,7 +1,0 @@
-
-<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
-  <ShortName>DT Blog</ShortName>
-  <Description>DiscreteTom's Blog</Description>
-  <InputEncoding>UTF-8</InputEncoding>
-  <Url type="text/html" template="https://discretetom.github.io/search/{searchTerms}/"/>
-</OpenSearchDescription>
