@@ -164,3 +164,11 @@ addr + 56 # 指向w，float, [-1, 1]
 - https://superuser.com/questions/1371818/how-to-make-windows-remember-the-show-this-window-on-all-desktops-option-even
 - https://learn.microsoft.com/en-us/windows/win32/winmsg/extended-window-styles
 - https://stackoverflow.com/questions/2285860/change-win32-window-style
+
+## 全局快捷键
+
+通常注册 Windows 全局热键，会使用`RegisterHotKey`/`PeekMessage`等 Windows API
+
+但是 Unity3D 里面似乎把 Windows 原生消息给拦截了，无法成功 PeekMessage
+
+所以使用了第三方库来解决了这个问题：[UnityRawInput](https://github.com/Elringus/UnityRawInput)
