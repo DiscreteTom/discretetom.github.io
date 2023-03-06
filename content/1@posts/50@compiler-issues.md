@@ -620,3 +620,5 @@ define({
   a: `b | c`,
 }).resolveRS({ __0: `a` }, { __0: `a __0` }, { next: `*`, reduce: false });
 ```
+
+同理，如果我们在 RR 冲突里面指定了`*`，那么`*`表示的是 another rule 的 NT 的 follow 集
