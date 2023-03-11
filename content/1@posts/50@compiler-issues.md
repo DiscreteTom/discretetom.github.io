@@ -609,9 +609,9 @@ define({
 }).resolveRS({ __0: `a` }, { __0: `a __0` }, { next: `a`, reduce: false });
 ```
 
-在这个例子里，`a`是非终结符，而不是终结符。所以这里`next: a`并不能 cover 所有的情况，我们需要判断`a`的 follow 集和`__0`的 first 集的交集，并且都`reduce: false`。为了简单起见，也可以不取交集，直接拿`__0`的 first 集来用
+在这个例子里，`a`是非终结符，而不是终结符。所以这里`next: a`并不能 cover 所有的情况，我们需要判断`a`的 follow 集和`__0`的 first 集的交集，并且都`reduce: false`
 
-所以，生成的 Resolver 不能仅把`next`设置为`a`。可以设置为一个特殊值：`*`。需要注意：`*`并不是表示【任何情况】，而仅仅是【next 是`__0`的 first】
+所以，生成的 Resolver 不能仅把`next`设置为`a`。可以设置为一个特殊值：`*`。需要注意：`*`并不是表示【任何情况】，而仅仅是【会引起冲突的 next】
 
 ```ts
 define({
@@ -621,4 +621,104 @@ define({
 }).resolveRS({ __0: `a` }, { __0: `a __0` }, { next: `*`, reduce: false });
 ```
 
-同理，如果我们在 RR 冲突里面指定了`*`，那么`*`表示的是 another rule 的 NT 的 follow 集
+同理，如果我们在 RR 冲突里面指定了`*`，那么`*`表示的也是【会引起冲突的 next】
+
+## 高级 resolver
+
+直接使用`resolveRS/resolveRR`可能比较麻烦。通常我们会给运算符设置优先级，比如`*/`的优先级比`+-`要高
+
+不过在 retsac 里面，我们不是按照运算符来定义语言，而是语法规则，所以可以给语法规则设置优先级：`exp '*' exp`比`exp '+' exp`的优先级高。使用如下语句：
+
+```ts
+builder.priority({ exp: `exp '*' exp` }, { exp: `exp '+' exp` });
+```
+
+这个语句意味着，在任何情况下，我们都应该先对`exp '*' exp`进行 reduce，然后再对`exp '+' exp`进行 reduce，也就是说：
+
+```ts
+builder.resolveRS(
+  { exp: `exp '*' exp` },
+  { exp: `exp '+' exp` },
+  { next: `*`, reduce: true }
+);
+builder.resolveRR(
+  { exp: `exp '*' exp` },
+  { exp: `exp '+' exp` },
+  { next: `*`, reduce: true, handleEnd: true }
+);
+builder.resolveRS(
+  { exp: `exp '+' exp` },
+  { exp: `exp '*' exp` },
+  { next: `*`, reduce: false }
+);
+builder.resolveRR(
+  { exp: `exp '+' exp` },
+  { exp: `exp '*' exp` },
+  {
+    next: `*`,
+    reduce: false,
+    handleEnd: true,
+  }
+);
+```
+
+除此之外，还可能多个语法规则有相同的优先级。比如`exp '+' exp`和`exp '-' exp`有相同的优先级，并且优先级都比`exp '*' exp`低，我们可一个给 priority 传入 array 来表明语法规则的优先级相同
+
+```ts
+builder.priority(
+  { exp: `'-' exp` }, // 优先级最高
+  [{ exp: `exp '*' exp` }, { exp: `exp '/' exp` }],
+  [{ exp: `exp '+' exp` }, { exp: `exp '-' exp` }] // 优先级最低
+);
+```
+
+所以，它会被展开为一个`1 * 2 * 2`的笛卡尔乘积
+
+另外，相同优先级的语法规则也需要被处理一下，以`exp '+' exp | exp '-' exp`为例
+
+```ts
+builder.resolveRS(
+  { exp: `exp '+' exp` },
+  { exp: `exp '-' exp` },
+  { next: `*`, reduce: true }
+);
+builder.resolveRR(
+  { exp: `exp '+' exp` },
+  { exp: `exp '-' exp` },
+  { next: `*`, reduce: true, handleEnd: true }
+);
+builder.resolveRS(
+  { exp: `exp '-' exp` },
+  { exp: `exp '+' exp` },
+  { next: `*`, reduce: true }
+);
+builder.resolveRR(
+  { exp: `exp '-' exp` },
+  { exp: `exp '+' exp` },
+  { next: `*`, reduce: true, handleEnd: true }
+);
+```
+
+最后，有些语法规则和自己冲突，比如`exp '+' exp`就和自己有 RS 冲突。retsac 提供了`leftSA/rightSA`函数，用来定义语法规则是【左自结合/left self association】还是【右自结合/right self association】
+
+```ts
+// 这些规则都是左自结合的
+builder.leftSA(
+  { exp: `exp '*' exp` },
+  { exp: `exp '/' exp` },
+  { exp: `exp '+' exp` },
+  { exp: `exp '-' exp` }
+);
+```
+
+每一个被标记为`leftSA`的都会添加一个类似这样的 resolver:
+
+```ts
+builder.resolveRS(
+  { exp: `exp '+' exp` },
+  { exp: `exp '+' exp` },
+  { next: `*`, reduce: true }
+);
+```
+
+如果是右自结合，则`reduce`是`false`
