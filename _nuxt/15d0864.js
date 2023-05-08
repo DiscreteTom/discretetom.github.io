@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[300],{1189:function(n,o){n.exports={title:"词汇"}}}]);
