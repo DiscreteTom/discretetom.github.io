@@ -81,7 +81,7 @@ async fn list_displays(
 3. 通过 NuGet 安装的`Grpc`缺少一个`grpc_csharp_ext.dll`文件，我们需要手动从[这里](https://www.nuget.org/packages/Grpc.Core)下载 Grpc 的包，然后把里面的`runtimes`文件夹里面的`grpc_csharp_ext.x64.dll`放到 Assets/Plugins/x64 里面，并重命名为`grpc_csharp_ext.dll`。然后在 Unity3D 里面把这个文件设置为`Load on startup`，这样就可以在 Unity3D 里面使用 gRPC 了
    1. 如果你的 PC 不是 x64，请使用对应的版本
 4. 访问 https://packages.grpc.io/ ，在最新的 build 里面，下载 gRPC protoc Plugins
-5. 执行 `protoc --csharp_out=. --grpc_out=. --plugin=protoc-gen-grpc="xxx\grpc_csharp_plugin.exe" xxx.proto`就可以生成 C# 代码了
+5. 在`proto`文件所在的文件夹，执行 `protoc --csharp_out=. --grpc_out=. --plugin=protoc-gen-grpc="xxx\grpc_csharp_plugin.exe" xxx.proto`就可以生成 C# 代码了
 6. 最后，把生成的 C# 代码放到 Unity3D 项目里面，就可以使用 gRPC 了
 
 ### 共享内存
@@ -89,3 +89,5 @@ async fn list_displays(
 如果是跨进程访问共享内存，需要共享内存的名字以`Global\`开头，并且要有管理员权限，否则只能在同一个进程里面访问
 
 另外，如果使用`DllImport`调用 Windows API，那么`GetLastError`的返回值可能是不正确的。C# 调用 Win API 需要用`[DllImport("xxx.dll", SetLastError = true)]`启用`SetLastError`，然后使用`Marshal.GetLastWin32Error()`获取错误码。直接调用 Windows 的`GetLastError()`会返回`0`或其他不确定的值。参考[windows 官方文档](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.dllimportattribute.setlasterror?view=net-7.0)
+
+只有创建 Global 共享内存的进程需要是管理员，访问贡献内存的不需要管理员权限
