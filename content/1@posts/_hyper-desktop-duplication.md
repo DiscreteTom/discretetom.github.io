@@ -77,7 +77,7 @@ async fn list_displays(
 
 1. 安装 Unity3D 插件：https://github.com/GlitchEnzo/NuGetForUnity ，这个插件让我们可以在 Unity3D 里面使用 NuGet
    1. 当然，也可以不用这个插件，直接在命令行里面用 NuGet 下载依赖，然后把依赖放到 Unity3D 项目里面
-2. 通过 NuGet，安装：`Google.protobuf`和`Grpc`.
+2. 通过 NuGet，安装：`Google.Protobuf`和`Grpc`.
 3. 通过 NuGet 安装的`Grpc`缺少一个`grpc_csharp_ext.dll`文件，我们需要手动从[这里](https://www.nuget.org/packages/Grpc.Core)下载 Grpc 的包，然后把里面的`runtimes`文件夹里面的`grpc_csharp_ext.x64.dll`放到 Assets/Plugins/x64 里面，并重命名为`grpc_csharp_ext.dll`。然后在 Unity3D 里面把这个文件设置为`Load on startup`，这样就可以在 Unity3D 里面使用 gRPC 了
    1. 如果你的 PC 不是 x64，请使用对应的版本
 4. 访问 https://packages.grpc.io/ ，在最新的 build 里面，下载 gRPC protoc Plugins
