@@ -91,3 +91,5 @@ async fn list_displays(
 另外，如果使用`DllImport`调用 Windows API，那么`GetLastError`的返回值可能是不正确的。C# 调用 Win API 需要用`[DllImport("xxx.dll", SetLastError = true)]`启用`SetLastError`，然后使用`Marshal.GetLastWin32Error()`获取错误码。直接调用 Windows 的`GetLastError()`会返回`0`或其他不确定的值。参考[windows 官方文档](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.dllimportattribute.setlasterror?view=net-7.0)
 
 只有创建 Global 共享内存的进程需要是管理员，访问贡献内存的不需要管理员权限
+
+另外，可以使用操作系统自带的 Resource Monitor 查看创建出来的共享内存的名称
