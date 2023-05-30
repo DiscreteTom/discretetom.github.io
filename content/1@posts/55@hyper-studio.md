@@ -43,7 +43,7 @@ wireshark 可以抓 USB 的包，只要安装的时候加上 usbpcap 插件即�
 
 毕竟调用 DLL 文件里面函数的时候是通过函数名来调用的，所以理论上 DLL 文件必定会包含函数名作为其元数据
 
-可以通过 Visual Studio 自带的工具 `dumpbin.exe` 对 DLL 进行分析：`dumpbin /export XRSDK.dll`
+可以通过 Visual Studio 自带的工具 `dumpbin.exe` 对 DLL 进行分析：`dumpbin /exports XRSDK.dll`
 
 分析得到 DLL 里面的函数有：
 
