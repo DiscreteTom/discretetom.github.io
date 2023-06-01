@@ -104,8 +104,6 @@ Shremdup 和前端程序也是解耦的，只是通过 RPC 通信，所以如果
 
 另外，如果使用`DllImport`调用 Windows API，那么`GetLastError`的返回值可能是不正确的。C# 调用 Win API 需要用`[DllImport("xxx.dll", SetLastError = true)]`启用`SetLastError`，然后使用`Marshal.GetLastWin32Error()`获取错误码。直接调用 Windows 的`GetLastError()`会返回`0`或其他不确定的值。参考[windows 官方文档](https://learn.microsoft.com/en-us/dotnet/api/system.runtime.interopservices.dllimportattribute.setlasterror?view=net-7.0)
 
-只有创建 Global 共享内存的进程需要是管理员，访问贡献内存的不需要管理员权限
-
 另外，可以使用操作系统自带的 Resource Monitor 查看创建出来的共享内存的名称
 
 在 Rust 中直接调用 Windows API 创建共享内存还需要注意: Rust 自身的`String`和`&str`是不是以`\0`结尾的，所以需要手动转换成 C 风格的 string（添加`\0`），否则会导致创建出来的共享内存名称不正确
