@@ -1,1 +1,0 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[303],{1210:function(n,o){n.exports={title:"数学"}}}]);
