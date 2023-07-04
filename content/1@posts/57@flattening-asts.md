@@ -1,6 +1,8 @@
 ---
 title: 如何扁平化抽象语法树
 description: Flattening ASTs (and Other Compiler Data Structures)
+tags:
+  - 编程语言
 ---
 
 > 原文：[Flattening ASTs (and Other Compiler Data Structures)](https://www.cs.cornell.edu/~asampson/blog/flattening.html)。本文结合自己的理解，做了很多魔改
