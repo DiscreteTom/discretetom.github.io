@@ -485,6 +485,8 @@ fn_def:
 
 可以看到里面有很多嵌套的 `__0` 和 `__1`
 
+另外，如果`+/*`修饰的不只是一个可能性，而是多个可能性，比如`(a | b)+`，那么`ab`, `aa`, `ba`, `bb`等都应该匹配这个规则。我们需要给所有可能性设置占位符（此处为`a`和`b`）。并且，`follow`集需要被修改，比如`b`现在也在`a`的 follow 集中，反之亦然
+
 ## 递归查询子节点
 
 使用 AdvancedBuilder 时，我们如何处理 ParserContext 呢？比如我想获取 `fn_def` 里面的所有 `stmt`，就不能简单地使用 `children` 来进行获取了
@@ -732,3 +734,46 @@ builder.resolveRS(
 比如数学计算里面的`exp '-' exp`和`'-' exp`，看起来它们是 RR 冲突，然而它们并不会出现在同一个 DFA 的状态里面，这就导致它们并不构成冲突。所以一旦使用了`*`，我们就要把整个 DFA 的所有状态都构造出来，才能判断冲突是否真实存在
 
 如果不这么做，会存在 bug。比如`exp '-' exp`和`'-' exp`在 handle end 的时候，是不看 next 的，而是直接根据是否到达 EOF 而进行 reject。如果我们以为它们存在冲突，那么`exp '-' exp`在 EOF 的时候一定会被拒绝，而`'-' exp`并不一定是我们希望使用的语法规则，从而导致 parse 失败
+
+## 顶级非终结符是否应该忽略 follow 集，直接接受？
+
+假设有如下语法规则：
+
+```ts
+define({
+  exp_stmt: `int identifier '=' exp ';'`,
+}).entry("exp_stmt");
+```
+
+那么它是无法解析如下输入的：
+
+```txt
+int a = 1;
+int b = 1;
+```
+
+因为 exp_stmt 是顶级非终结符，它的 follow 集是空。当我们解析完`int a = 1;`后，发现下一个 token 是 int，无法匹配 exp_stmt 的 follow 集，所以被 reject
+
+为了解决这个问题，可以设置：顶级非终结符忽略 follow 集，直接接受。这样，我们一旦得到了 exp_stmt，就会立即接受，而不是检查下一个 token 是否在 follow 集中。
+此时，解析上述输入，第一次会解析出来一个 exp_stmt。我们需要先把它从 parser buffer 取出来，然后进行下一次解析，得到第二个 exp_stmt
+
+但是它仍然存在问题：过于保守。比如我们定义了如下语法规则：
+
+```ts
+define({
+  gr: `grammar | grammar rename`,
+}).entry("gr");
+```
+
+那么当我们得到`grammar`之后，因为`grammar`可以被 reduce 为`gr`，并且`gr`是顶级非终结符，所以根本不会检查后面的 token 是不是 rename，就会直接接受。这样就导致了`grammar`后面的 rename 会被忽略
+
+从上面的推导可以看出，当我们尝试 reduce 出顶级非终结符时，有以下几种策略可以选择：
+
+- 忽略 follow 集，直接接受
+  - 可能会有过于保守的问题，可能后面还有更多的内容可以被 reduce 到当前的顶级非终结符里面
+- 检查 follow 集，如果不在 follow 集中，则 reject
+  - 无法实现解析部分输入，只能把输入作为一个整体进行解析
+
+这两种策略都是有用武之地的，所以 retsac 提供了`ignoreEntryFollow`参数，可以让用户自己选择。默认值是`false`，也就是说会检查 follow 集
+
+> 是否可以添加一个 greedy 选项？可能需要 re-parse 功能才行
