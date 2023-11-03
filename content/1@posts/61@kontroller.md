@@ -63,7 +63,7 @@ error: couldn't read C:\...\target\x86_64-unknown-linux-musl\release\build\winit
 
 只能在 steam deck 上面编译了。在 steam deck 上面配 rust 环境，vscode remote ssh
 
-> 这次 vscode remote ssh 的体验比之前好很多，执行各种命令都巨快，难道是 SteamDeck 优化的相关功能
+> 这次 vscode remote ssh 的体验比之前好很多，执行各种命令都巨快，可能是 SteamDeck 优化了相关功能
 
 注意把 Steam SDK 换成 Linux 平台的 SDK，并放到 path 里面（Linux 下即使是同一文件夹也可能找不到），比如 `/usr/lib`
 
@@ -73,6 +73,8 @@ error: couldn't read C:\...\target\x86_64-unknown-linux-musl\release\build\winit
 
 至此，就可以成功在桌面模式启动此程序了
 
-## HID
+程序启动后，因为调用 SteamInput 所以手柄和 trackpad 的输入都会被捕获，也无法通过长按 Start 切换手柄模式。可以用触屏关闭应用
 
-https://learn.microsoft.com/en-us/windows-hardware/drivers/gettingstarted/do-you-need-to-write-a-driver-
+## 成果
+
+https://github.com/DiscreteTom/kontroller

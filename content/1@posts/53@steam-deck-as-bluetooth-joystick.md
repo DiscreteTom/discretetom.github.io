@@ -41,6 +41,7 @@ description: 然而并没有使用 HID，非常遗憾
 - [BlueZ 官方文档](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc)
 - [BlueZ 的 Profile API 文档](https://git.kernel.org/pub/scm/bluetooth/bluez.git/tree/doc/profile-api.txt)
 - [蓝牙 HID Profile](https://www.bluetooth.com/specifications/specs/human-interface-device-profile-1-1-1/)
+- [Windows 自带哪些驱动](https://learn.microsoft.com/en-us/windows-hardware/drivers/gettingstarted/do-you-need-to-write-a-driver-)
 
 ### 方案 2：蓝牙 Socket
 
