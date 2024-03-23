@@ -137,7 +137,7 @@ docker-compose up
 
 ### 客户端
 
-需要使用 OpenVPN v2.6 及以下的版本，否则无法使用 TAP 模式
+需要使用 OpenVPN v2.6 及以下的版本（windows 平台应该是 OpenVPN GUI），否则无法使用 TAP 模式
 
 - https://forums.openvpn.net/viewtopic.php?t=34863
 - https://openvpn.net/community-downloads/
