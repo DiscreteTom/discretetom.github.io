@@ -82,7 +82,7 @@ fn _factory() -> Closure {
 
 ```rust
 fn factory() -> impl FnMut() {
-  let s = String::from("hello");
+  let mut s = String::from("hello");
   move || s.push('a') // 此处修改了环境
 }
 
@@ -98,7 +98,7 @@ impl Closure {
 }
 
 fn _factory() -> Closure {
-  let s = String::from("hello");
+  let mut s = String::from("hello");
   Closure { s }
 }
 ```
