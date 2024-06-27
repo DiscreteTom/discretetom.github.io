@@ -69,6 +69,26 @@ pacman-key --populate
 exit
 ```
 
+## 桌面系统
+
+Gaming Mode 和 Desktop Mode 的桌面系统是不同的，可以使用`loginctl show-session $(loginctl | grep $(whoami) | awk '{print $1}') -p Type`来查看当前的桌面系统
+
+以下是输出：
+
+```bash
+# in gaming mode
+(deck@steamdeck ~)$ loginctl show-session $(loginctl | grep $(whoami) | awk '{print $1}') -p Type
+Type=wayland
+
+Type=tty
+
+# in desktop mode
+(deck@steamdeck ~)$ loginctl show-session $(loginctl | grep $(whoami) | awk '{print $1}') -p Type
+Type=tty
+
+Type=x11
+```
+
 ## 其他
 
 - 截屏，可以使用 Spectacle
@@ -80,3 +100,5 @@ exit
 - [Get Your Deck's IP Address](https://deckcentral.net/posts/get_your_decks_ip/)
 - [Unlock Steam Deck](https://christitus.com/unlock-steam-deck/)
 - [在 steam deck 的桌面模式截屏](https://steamcommunity.com/app/1675200/discussions/0/3395175706747166784/)
+- [查看桌面系统](https://ostechnix.com/check-wayland-or-x11-in-linux/)
+- [X11 桌面系统可能存在缩放问题](https://github.com/rust-windowing/winit/issues/2401)
