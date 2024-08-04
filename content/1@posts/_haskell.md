@@ -559,15 +559,94 @@ main = do
     return () -- action返回一个tuple
 ```
 
+## 类型推断
+
+编译器如何根据源代码进行类型推断？步骤如下：
+
+1. 给所有变量一个不同的类型
+2. 给所有函数的泛型参数一个不同的类型
+3. 看看哪些类型是一样的，减少类型的数量，直到无法减少
+
+比如：
+
+```hs
+-- 定义一个函数
+f x y z = (x + y) : z
+
+-- 编译器会给变量x/y/z分别赋予不同的类型，假设是a/b/c
+x :: a
+y :: b
+z :: c
+
+-- 由于加法的定义是：
+(+) :: Num d => d -> d -> d
+-- （此处由于a/b/c都已经被使用了，假设加法的泛型参数是d）
+
+-- 那么在我们的函数f中，x和y进行了加法操作，所以
+a = d
+b = d
+
+-- 类似的，由于`:`的定义是：
+(:) :: e -> [e] -> [e]
+
+-- 那么在我们的函数f中，(x+y)的结果类型`d`和z的类型`c`进行了`:`操作，所以
+d = e
+c = [e]
+
+-- 总结下来
+f :: Num d => d -> d -> [d] -> [d]
+```
+
+使用这种方法也可以发现类型错误，比如发现某两个不兼容的类型竟然是相等的，比如`b = [b]`，那就是出现了类型错误
+
 ## Monad
+
+### 概述
+
+Monad 相当于一个盒子，比如 Maybe（或者 Rust 里面的`Option`）就是一个 Monad。这个盒子里面可能有值，也可能没有值
+
+在 haskell 中一个 monad 需要实现四个函数（可以使用`:info Monad`查看）：
+
+- `>>=` bind: 用来把盒子里面的值取出来，执行操作，然后再装回去
+- `>>` sequence: 在没有出现异常的时候顺序执行，出现异常的时候传播异常（sequence 这个名字是 github copilot 生成的，似乎这个函数并没有官方名
+- `return` 将一个值装箱
+- `fail` 处理异常
+
+其中只有`>>=`是必须实现的，其他三个都有默认实现
+
+### bind
 
 `>>=`函数是一个特殊的函数，称为`bind`
 
-Monad 相当于一个盒子，bind 相当于把盒子里面的值取出来（拆箱），执行操作，然后再装回去（装箱）
+bind 相当于把盒子里面的值取出来（拆箱），执行操作，然后再装回去（装箱）
 
 ```hs
+-- bind要求泛型m必须是一个Monad
 (>>=) :: Monad m => m a -> (a -> m b) -> m b
+```
 
+翻译为 Rust 类似于：
+
+```rs
+fn bind<A, B, M: Monad>(m: M<A>, f: fn(A) -> M<B>) -> M<B>;
+
+// 实例
+fn bind(m: Option<String>, f: fn(String) -> Option<i32>) -> Option<i32>;
+
+// 其实和Option::and_then是一样的
+impl<T> Option<T> {
+  pub fn and_then<U>(self, f: impl FnOnce(T) -> Option<U>) -> Option<U> {
+    match self {
+        Some(x) => f(x),
+        None => None,
+    }
+  }
+}
+```
+
+回到 Haskell：
+
+```hs
 Just 1 >>= (\x -> Just x) -- Just 1
 -- Maybe是一个Monad
 -- 相当于我们把Maybe里面的1取出来，执行操作，然后再装回去
@@ -610,9 +689,13 @@ instance Monad Maybe where
 
 因为 Monad 可以保证调用环境的纯洁性，所以可以用来处理副作用。通常用来处理 IO，或者其他拥有内部状态的操作
 
+### sequence
+
+另一个 Monad 的重要函数是`>>`
+
 ```hs
--- 另一个Monad的重要函数是`>>`
 (>>) :: Monad m => m a -> m b -> m b
+-- 可以使用bind来实现sequence
 a >> b = a >>= (\_ -> b) -- 如果a有值，把a的值丢弃，然后把b的值装箱返回
 
 -- 举例
@@ -631,6 +714,18 @@ main = putStrLn "Hello" >> putStrLn "World" >> return ()
 -- 可以看出，我们仅关注action是否返回了异常（比如Nothing）。一旦发生异常，就会短路并向外传播，否则就继续执行
 ```
 
+类似于 Rust 中的`Option::and_then`只不过丢弃了`Some`的内容
+
+### fail
+
+`fail`函数用来处理异常，函数签名是：
+
+```hs
+fail :: String -> m a
+```
+
+默认情况下，fail 会接受一个字符串（错误信息），然后直接终止程序。但是如果你的 monad 可以处理这个异常，那么你可以重载这个函数，让它返回一个 monad
+
 ### Monad Laws
 
 如果我们实现了一个 Monad，那么我们需要保证它满足以下三个定律
@@ -644,4 +739,22 @@ m >>= return = m
 
 -- Associativity
 m >>= (\x -> f x >>= g) = (m >>= f) >>= g
+```
+
+比如对于 Rust 中的 Option 来说：
+
+```rs
+// left identity
+let f = |x| Some(x + 1);
+Some(1).and_then(f) == f(1)
+
+// right identity
+Some(1).and_then(Some) == Some(1)
+
+// associativity
+let f = |x| Some(x + 1);
+let g = |x| Some(x * 2);
+Some(1).and_then(f.and_then(g)) ==
+Some(1).and_then(f).and_then(g)
+// 也就是说，在monad内部运算f/g和在monad外部运算f/g是等价的
 ```
