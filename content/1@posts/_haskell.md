@@ -758,3 +758,107 @@ Some(1).and_then(f.and_then(g)) ==
 Some(1).and_then(f).and_then(g)
 // 也就是说，在monad内部运算f/g和在monad外部运算f/g是等价的
 ```
+
+## QuickCheck
+
+用来在 ghci 里面快速测试函数是否正常，或者在重构的时候判断两个函数是否等价
+
+安装：
+
+```sh
+cabal install QuickCheck
+```
+
+导入：
+
+```hs
+import Test.QuickCheck
+```
+
+使用例：
+
+```hs
+-- 正常的函数
+f a b = (a+b) == (b+a)
+quickCheck f
+
+-- 错误的函数
+f xs = (length $ tail xs) == ((length xs) - 1)
+quickCheck f
+-- 报错，因为 tail [] 会抛出异常
+
+-- 设置例外，这里的`==>`其实是quickCheck的一个操作符，定义了过滤条件
+f xs =
+  not (null xs) ==>
+  (length $ tail xs) == ((length xs) - 1)
+quickCheck f
+
+-- verbose
+quickCheck (verbose f)
+
+-- 前面的例子使用`==`相当于rust中的`assert`，仅判断`==>`后面是否为true
+-- 使用`===`代替`==`相当于rust中的`assert_eq`，虽然都是判断是否相等
+-- 但是`===`会输出更多的信息，比如左右的值各是多少
+f xs =
+  not (null xs) ==>
+  (length $ tail xs) == ((length xs) - 1)
+```
+
+其他 util functions:
+
+- collect: 打印测试数据的一些信息
+- classify: 为测试数据分类
+
+还可以使用`where`指定数据类型
+
+## 无限列表
+
+由于函数式编程的惰性求值，我们可以创建无限列表
+
+```hs
+-- 一个拥有无限个1的列表
+ones = 1 : ones
+
+-- 用例
+take 5 ones -- [1, 1, 1, 1, 1]
+```
+
+就像是一些编程语言里面的 generator 一样
+
+以下是自然数、偶数、奇数的无限列表（这种写法不一定是最高效的，只是为了演示 map/filter 之类的功能可以正常使用）
+
+```hs
+nat = asc 1
+  where
+    asc n = n : asc (n+1)
+
+evens = map (*2) nat
+
+odds = filter (\x -> mod x 2 == 0) nat
+```
+
+但是需要注意：虽然我们可以 map/filter/take 等操作无限列表，但是如果我们使用了`length`这种需要遍历整个列表的操作，那么程序就会陷入无限循环，所以不要 evaluate the whole list or evaluate the end
+
+其他常见无限列表：
+
+- 素数
+- 斐波那契数列
+- 不一定是数字，也可以是字符、字符串等
+
+应用：
+
+```rs
+let mut i = 0;
+loop {
+  if p(i) {
+    break;
+  }
+  i++;
+}
+```
+
+可以使用无限列表简写为：
+
+```hs
+find p nat
+```
