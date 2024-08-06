@@ -608,7 +608,7 @@ Monad 相当于一个盒子，比如 Maybe（或者 Rust 里面的`Option`）就
 在 haskell 中一个 monad 需要实现四个函数（可以使用`:info Monad`查看）：
 
 - `>>=` bind: 用来把盒子里面的值取出来，执行操作，然后再装回去
-- `>>` sequence: 在没有出现异常的时候顺序执行，出现异常的时候传播异常（sequence 这个名字是 github copilot 生成的，似乎这个函数并没有官方名
+- `>>` anonymous bind: 在没有出现异常的时候顺序执行，出现异常的时候传播异常
 - `return` 将一个值装箱
 - `fail` 处理异常
 
@@ -689,13 +689,13 @@ instance Monad Maybe where
 
 因为 Monad 可以保证调用环境的纯洁性，所以可以用来处理副作用。通常用来处理 IO，或者其他拥有内部状态的操作
 
-### sequence
+### anonymous bind
 
 另一个 Monad 的重要函数是`>>`
 
 ```hs
 (>>) :: Monad m => m a -> m b -> m b
--- 可以使用bind来实现sequence
+-- 可以使用bind来实现anonymous bind
 a >> b = a >>= (\_ -> b) -- 如果a有值，把a的值丢弃，然后把b的值装箱返回
 
 -- 举例
@@ -862,3 +862,199 @@ loop {
 ```hs
 find p nat
 ```
+
+## newtype
+
+使用 newtype 可以用来创建同构的类型，比如：
+
+```hs
+newtype Name = Name String
+```
+
+newtype 要求：只能有一个 constructor，只能有一个成员（以此来保证新类型和内部类型同构）
+
+newtype 只会在编译期检查类型，在运行时会被擦除
+
+## Eigher
+
+```hs
+data Either a b = Left a | Right b
+```
+
+曾经 Rust 中也有 Either，但是由于 Left/Right 这两个名字太 general，所以被从 std 中移除了。开发者应该创建自己的数据类型，并给 Left/Right 起一个更加具体的名字
+
+## Thunk
+
+Thunk 是 Haskell 中的一个概念，类似于 Rust 中的闭包。Thunk 是一个延迟计算的表达式，只有在需要的时候才会被计算
+
+```hs
+-- 举例
+f x y = if x > 0 then x else y
+f (1 + 1) (2 + 1)
+```
+
+在命令式语言中会先计算 1+1 和 2+1，然后再调用 f
+
+但是在 Haskell 中，1+1 和 2+1 都是 Thunk，只有在 f 需要的时候才会被计算。那么在上面的例子中，1+1 会先被计算，但是因为 x>0，所以 2+1 就不会被计算
+
+但是这个特性可能会导致内存中保存太大的 thunk 而没有计算，导致内存的浪费，所以有些函数提供了 strict 版本，不延迟计算，而是立即计算。比如`foldl`就提供了 strict 版本的`foldl'`
+
+```hs
+foldl (+) 0 [1,2,3]
+==> foldl (+) (0+1) [2,3]
+==> foldl (+) ((0+1)+2) [3]
+==> foldl (+) (((0+1)+2)+3) [] -- 越来越大的 thunk
+
+foldl' (+) 0 [1,2,3]
+==> foldl' (+) 1 [2,3] -- 立即计算
+==> foldl' (+) 3 [3]
+==> foldl' (+) 6 []
+```
+
+这是通过 `seq` 函数实现的：
+
+```hs
+seq :: a -> b -> b
+seq a b = b
+```
+
+看起来好像只是丢弃了第一个参数，但是实际上会强制计算第一个参数，然后返回第二个参数。这是 haskell 中唯一一个会强制计算参数的函数（在编译器里面实现，源代码看不出来）
+
+我们会说 `a` 是 strict 的（ `b` 是 lazy 的），或者 "`seq` is strict in its first argument"
+
+类似的，`$!` 是一个 strict 的 `$`，会强制计算它的参数。比如`$! f x`会强制计算`x`，然后再调用`f`
+
+另外，不要 abuse seq! 编译器很多时候已经足够聪明了，特别是启动优化的时候
+
+## Exception
+
+```hs
+data MyError = ErrorA | ErrorB deriving Show
+instance Exception MyError
+
+-- 抛出异常
+throw ErrorA
+```
+
+只有 IO monad 可以捕获异常。纯函数无法捕获异常，因为纯函数是没有副作用的
+
+## 并发
+
+Haskell 98 不支持并发，但是有扩展可以让 Haskell 支持并发，并且默认其实就是启用的，所以直接用就行
+
+- 使用`forkIO` fork 一个线程
+- 使用`MVar` 用来在线程之间传递数据（类似 mutex 和 queue，有原子性，但是只能存一个数据）
+- 使用`Chan` 用来在线程之间传递数据（类似 queue，可以存多个数据）
+- 使用`QSem/QSemN`作为信号量
+
+### 乐观锁
+
+默认情况下的锁是悲观的：线程 A 因为担心线程 B 在 A 修改数据的同时修改数据，所以线程 A 在获取数据的时候就给数据加一个锁，让线程 B 无法修改数据，这样线程 A 就可以安全地修改数据了
+
+悲观锁的缺点是 blocking，在线程 A 处理的时候线程 B 都无法处理，导致效率低下
+
+乐观锁：线程 A 不担心线程 B 在线程 A 修改数据的同时修改数据，所以线程 A 先拿到数据，不上锁。当 A 完成了处理，把数据写回的时候，再判断数据是否被 B 修改过。如果没有，那么就写回，如果有，那么就重试
+
+乐观锁的优点是避免了死锁，还能保证原子性、一致性和隔离性
+
+乐观锁也叫 Transactional Memory，通常由硬件实现，也可以由软件实现
+
+在 haskell 中，使用`STM`作为乐观锁（software transactional memory），它是一个 Monad
+
+## Semigroup and Monoid
+
+- Magma: A set `S` with a closed binary operation (the operation produces elements that are in `S`)
+- Semigroup: An associative magma
+  - e.g. `(a + b) + c` = `a + (b + c)`
+  - 一个类型可能有多个 Semigroup 实例，比如 Int 可以有 `+` 和 `*` 两个 Semigroup 实例
+  - 不一定是数字，比如数组拼接也是一个 Semigroup
+- Monoid: A semigroup with an identity element
+  - 比如加法里面的 0，乘法里面的 1，数组拼接里面的空数组
+
+```hs
+-- 在haskell中使用 `<>` 表示这个 semigroup 中的具有结合性的操作
+instance Semigroup [a] where
+  (<>) = (++)
+
+class Semigroup a => Monoid a where
+  mempty :: a -- 只有这个是必须的
+  mappend :: a -> a -> a
+  mconcat :: [a] -> a
+```
+
+一个类型可能没有符合 semigroup 的操作，也可能有多个符合 semigroup 的操作（比如整数可以有加法和乘法）。可以使用 newtype 创建新的类型，就可以给整数实现多个 semigroup/monoid
+
+为什么要抽象这两个定义出来？
+
+- 为了让代码更加通用
+  - 比如定义一个分布式算法，只接受 monoid 类型的参数，这个分布式算法可以自由安排计算顺序，因为 monoid 是满足结合律的，然后把计算任务分配到不同算力的机器上，最后再合并结果
+- 可以从理论上证明代码的正确性
+  - 比如 `mempty <> x = x`，`x <> mempty = x`，`x <> (y <> z) = (x <> y) <> z`
+
+## Category Theory
+
+在 category theory 中会研究两个概念：object 和 morphism(arrow)
+
+不同的 object 之间可以通过 morphism 连接起来，形成一个 category。每个 object 都有一个 identity morphism 用来连接自己
+
+延申学习资料：[Programming with Categories](https://www.youtube.com/playlist?list=PLhgq-BqyZ7i7MTGhUROZy3BOICnVixETS)
+
+书籍：《category theory for programmers》《seven sketches in compositionality: an invitation to applied category theory》
+
+Rust crate: [fmap](https://docs.rs/fmap/latest/fmap/index.html)
+
+### Functor
+
+一个 category 到另一个 category 的映射
+
+```hs
+class Functor (f :: * -> *) where
+  fmap :: (a -> b) -> (f a -> f b) -- 必须实现
+  (<$) :: a -> f b -> f a
+
+-- 举例
+instance Functor Maybe where
+  fmap f (Just x) = Just (f x)
+  fmap _ Nothing = Nothing
+
+instance Functor [] where
+  fmap = map
+```
+
+基于这种抽象，我们就多个一个从理论上证明算法正确性的工具。比如我们可以证明对于任意列表，`map (f.g) == map f (map g)`。或者说，对于任意 Functor，`fmap (f.g) == fmap f . fmap g`
+
+### Monoidal
+
+```hs
+class Functor f => Monoidal f where
+  unit :: f ()
+  (**) :: (f a -> f b) -> f (a, b)
+
+-- 举例
+instance Monoidal [] where
+  unit = [()]
+  (**) as bs = [(a, b) | a <- as, b <- bs]
+```
+
+### Applicative
+
+可以用来提升`f`
+
+```hs
+class Functor f => Applicative (f :: * -> *) where
+  pure :: a -> f a
+  (<*>) :: f (a -> b) -> (f a -> f b)
+```
+
+### 再看 Monad
+
+```hs
+class Applicative m => Monad (m :: * -> *) where
+  (>>=) :: m a -> (a -> m b) -> m b
+  (>>) :: m a -> m b -> m b
+  return :: a -> m a
+```
+
+### Arrow
+
+没看明白，以后再看
